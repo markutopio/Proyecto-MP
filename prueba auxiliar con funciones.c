@@ -90,32 +90,37 @@ int carga_fichero(registro **reg,int x){ //x es el numero de registros que se ha
     char *token;
     int retorno = 0;
 
-    if(f=fopen("datos.txt","r")){
+    if((f=fopen("datos.txt","r"))!=NULL){
         printf("\napertura de fichero hecha\n");
-    while((fgets(linea,100,f))){
-        if((*reg=(registro*)realloc(*reg, (i+1)*sizeof(registro)))!=NULL){
-            printf("\nse amplia memoria");
+        while(fgets(linea,100,f)){
+            if((*reg=(registro*)realloc(*reg, (i+1)*sizeof(registro)))!=NULL){
+                printf("\nse amplia memoria");
+            } else {
+                // Manejar el error de realloc aquÃ­
+                printf("Error al realocar memoria\n");
+                return -1;
+            }
+            printf("\n%i linea",i+1);
+            token=strtok(linea, "-");
+            strcpy((*reg)[i].dni,token);
+
+            token=strtok(NULL,"\n");//Ãºltimo de la linea \n
+            (*reg)[i].edad=atoi(token);
+            printf("\n\ndni [%s] edad [%d]\n",(*reg)[i].dni,(*reg)[i].edad);
+            i++;
         }
-        printf("\n%i linea",i+1);
-        //Habria que poner un if para comprobar si hay memoria disponible
-        token=strtok(linea, "-");
-        strcpy((*(reg+i))->dni,token);
-
-
-        token=strtok(NULL,"\n");//último de la linea \n
-        ((*(reg+i))->edad)=atoi(token);
-        printf("\n\ndni [%s] edad [%d]\n",(*(reg+i))->dni,(*(reg+i))->edad);
-        //strcpy((*(reg+i))->edad,token);
-        i++;
-    }
-    printf ("Se ha leído el fichero con %d registros \n",i);
-    for(j=0;j<i;j++){ printf("dni [%s] edad [%d]\n",(*(reg+i))->dni,(*(reg+i))->edad);}
+        printf ("Se ha leido el fichero con %d registros \n",i);
+        for(j=0;j<i;j++){
+            printf("dni [%s] edad [%d]\n",(*reg)[j].dni,(*reg)[j].edad);
+        }
         fclose(f);
-        free(f);
+    } else {
+        // Manejar el error de fopen aquÃ­
+        printf("Error al abrir el fichero\n");
+        return -1;
     }
     return i;
 }
-
 
 void eliminar_salto(char *v_n,int n){ //n es el numero de caracteres de la cadena
     int i;
