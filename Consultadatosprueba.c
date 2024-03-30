@@ -15,8 +15,8 @@ int main() {
     }
 
     printf("Introduce %d elementos en el vector:\n", numElementos);
-    for (i = 0;i<numElementos;i++) {
-        printf("Elemento %d: ", i+1);
+    for (i=0;i<numElementos;i++) {
+        printf("Elemento %d:", i+1);
         scanf("%d", &vector[i]);
     }
 
