@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include "datos.h"
 #define N 3
 
 typedef struct{
@@ -9,11 +10,14 @@ char nombre[21];
 int edad;
 }registro;
 
-void intro_datos(registro *,int,char *);
+void intro_datos(registro *);
+void introcliente(registro *,int);
 void eliminar_salto(char *,int);
 int guarda_fichero(registro *,int);
+int guarda_cliente(registro *,int);
 int carga_fichero(registro **,int);
 void ConsultaDatos(registro *,int);
+void ConsultaClientes(registro *,int);
 void ModificaDatos(registro *,int);
 int AltaDatos(registro **,int);
 int BajaDatos(registro **, int);
@@ -21,8 +25,7 @@ int BajaDatos(registro **, int);
 
 int main(){
     registro *reg;
-    int edad,op,i;
-    char dni[10];
+    int op,op2;
     int reg_carga,reg_exacto=0; //variable 1: numero de registros cargados, variable 2: registro exacto localizado en el vector
     char s_n;
 
@@ -40,8 +43,21 @@ int main(){
 
         switch(op){
             case 1:
-                reg_carga=guarda_fichero(reg,reg_carga); //reg_carga es el numero total de registros que se han almacenado en el fichero
-                printf("\n\nSe han guardado %i registros",reg_carga);
+                printf("\n\nIntroduce 1 para datos y 2 para clientes: ");
+                scanf("%i",&op2);
+                switch(op2){
+                    case 1:
+                        reg_carga=guarda_fichero(reg,reg_carga); //reg_carga es el numero total de registros que se han almacenado en el fichero
+                        printf("\n\nSe han guardado %i registros",reg_carga);
+                        break;
+                    case 2:
+                        reg_carga=guarda_cliente(reg,reg_carga); //reg_carga es el numero total de registros que se han almacenado en el fichero
+                        printf("\n\nSe han guardado %i registros",reg_carga);
+                        break;
+                    case 0: return 0;
+                        break;
+                }
+
                 break;
             case 2:
                 reg_carga=carga_fichero(&reg,reg_carga);
@@ -51,7 +67,20 @@ int main(){
                 ModificaDatos(reg,reg_carga);
                 break;
             case 4:
-                intro_datos(reg,edad,dni);
+                printf("\n\nIntroduce 1 para datos y 2 para clientes: ");
+                scanf("%i",&op2);
+
+                switch(op2){
+                    case 1:
+                        intro_datos(reg);
+                        break;
+                    case 2:
+                        introcliente(reg,reg_carga);
+                        break;
+                    case 0: return 0;
+                        break;
+                }
+
                 break;
             case 5:
                 reg_exacto=AltaDatos(&reg,reg_carga);
@@ -59,7 +88,19 @@ int main(){
                 reg_carga=reg_exacto;
                 break;
             case 6:
-                ConsultaDatos(reg,reg_carga);
+                printf("\n\nIntroduce 1 para datos y 2 para clientes: ");
+                scanf("%i",&op2);
+
+                switch(op2){
+                    case 1:
+                        ConsultaDatos(reg,reg_carga);
+                        break;
+                    case 2:
+                        ConsultaClientes(reg,reg_carga);
+                        break;
+                    case 0: return 0;
+                        break;
+                }
                 break;
             case 7:
                 reg_exacto=BajaDatos(&reg,reg_carga);
@@ -104,7 +145,6 @@ int carga_fichero(registro **reg,int x){ //x es el numero de registros que se ha
     *reg=NULL;
     int i=0,j;
     char *token;
-    int retorno = 0;
 
     if((f=fopen("datos.txt","r"))!=NULL){
         while(fgets(linea,100,f)){
@@ -180,8 +220,9 @@ void ModificaDatos(registro *reg,int x){
 //cabecera: void intro_datos(registro *r,int x,char *c)
 //precondicion:
 //postcondicion: se almacenan una serie de valores al principio del programa en el vector de registros
-void intro_datos(registro *r,int x,char *c){
-    int i;
+void intro_datos(registro *r){
+    int i,x;
+    char c[10];
     fflush(stdin);
     for(i=0;i<N;i++){
         printf("\nIntroduce tu dni: ");
@@ -210,7 +251,7 @@ void intro_datos(registro *r,int x,char *c){
 //precondicion: inicializados una serie de valores en el vector de estructuras
 //postcondicion: añade un elemento extra al vector de estructuras
 int AltaDatos(registro **reg,int x){ //x es el numero de registros que tenemos y si lo aumentamos en 1 podremos añadir uno extra
-    int i,eda;
+    int eda;
     char cadena[10];
 
     // Incrementamos el contador de registros
@@ -245,7 +286,7 @@ int AltaDatos(registro **reg,int x){ //x es el numero de registros que tenemos y
 
 
 int BajaDatos(registro **reg,int x){ //x es el numero de registros que tenemos y deberemos reducirlo en uno para elminar la ultima posicion
-    int i,eda,aux;
+    int i,aux;
     char cadena[10];
     int encontrado=0;
 
@@ -315,6 +356,62 @@ void ConsultaDatos(registro *reg, int can_regs){
 }
 
 
+void ConsultaClientes(registro *reg, int can_regs){
+    int i;
+
+    printf("\nLos registros almacenados son: ");
+    for(i=0;i<can_regs;i++){
+        printf("\nPosicion %i del vector de estructuras: [%s]-[%f]",i+1,v_clientes[i].Id_cliente,v_clientes[i].Cartera);
+    }
+}
+
+void introcliente(registro *r,int a){
+    int i;
+    float x;
+    char c[8];
+
+    if((v_clientes=(Clientes *)malloc(a*sizeof(Clientes)))==NULL){ //se almacena memoria para emplear los registros
+        printf("Error");
+    }else{
+        fflush(stdin);
+        for(i=0;i<N;i++){
+        printf("\nIntroduce tu id: ");
+        fgets(c,8,stdin);
+
+        fflush(stdin);
+
+        printf("\nEl valor es %s",c);
+
+        eliminar_salto(c,8);
+
+        strcpy(v_clientes[i].Id_cliente,c);
+
+
+        printf("\nIntroduce el dinero que tienes: ");
+        scanf("%f",&x);
+
+        fflush(stdin);
+
+        v_clientes[i].Cartera=x;
+        }
+    }
+}
+
+
+int guarda_cliente(registro *r,int a){
+    FILE *f;
+    int i;
+
+    f=fopen("cliente.txt","w"); //apertura de fichero
+    fflush(stdin);
+    for(i=0;i<a-1;i++){ //N veces para que haya saltos de linea
+        fprintf(f,"%s-%f\n",v_clientes[i].Id_cliente,v_clientes[i].Cartera); //los valores se guardan en el fichero
+    }
+    fprintf(f,"%s-%f",v_clientes[i].Id_cliente,v_clientes[i].Cartera); //los valores se guardan en el fichero
+
+    fclose(f); //se cierra el fichero
+    return (a);
+}
 //bajadatos elimina una posicion del vector de registros
 
 //entonces si tu tienes N posiciones y eliminas la posicion i te queda que el vector tiene N-1 posiciones
