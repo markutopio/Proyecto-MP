@@ -4,6 +4,7 @@ int main(){
     registro *reg;
     Productos *re;
     Clientes *cli;
+
     int op,op2;
     int reg_carga,reg_exacto=0; //variable 1: numero de registros cargados, variable 2: registro exacto localizado en el vector
     char s_n;

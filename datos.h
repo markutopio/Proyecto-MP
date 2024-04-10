@@ -23,7 +23,7 @@ typedef struct{ //Estructura para clientes.txt
     char Localidad[21]; //20 caracteres y caracter terminador
     char Provincia[21]; //20 caracteres y caracter terminador
     char email[31]; //30 caracteres y caracter terminador, nombre de usuario para acceso a la plataforma
-    char Contrasena[16];    //15 caracteres y caracter terminador, contraseña para acceder al sistema
+    char Contrasena[16];    //15 caracteres y caracter terminador, contraseï¿½a para acceder al sistema
     float Cartera; //dinero del que dispone el cliente para adquirir productos
 }Clientes; //informacion de los clientes del sistema
 
@@ -32,7 +32,7 @@ typedef struct{ //Estructura para adminprov.txt
     char Id_empresa[5]; //4 digitos y caracter terminador
     char Nombre_empre[21]; //20 caracteres y caracter terminador, ESIZON si es administrador
     char email[31]; //30 caracteres y caracter terminador, nombre de usuario para acceso a la plataforma
-    char Contrasena[16];    //15 caracteres y caracter terminador, contraseña para acceder al sistema
+    char Contrasena[16];    //15 caracteres y caracter terminador, contraseï¿½a para acceder al sistema
     char Perfil_usuario; //a: <<administrador>> o p: <<proveedor>>
 }Adminprov; //informacion de los administradores y proveedores de productos de ESIZON
 
@@ -87,7 +87,7 @@ typedef struct{ //Estructura para lockers.txt
 typedef struct{ //Estructura para compartimentoslockers.txt
     char Id_locker[11]; //10 caracteres maximo
     int Num_comp;   //numero de compartimentos
-    char Cod_locker; //codigo del locker
+    int Cod_locker; //codigo del locker
     char Estado;    //o: <<ocupado>> o v: <<vacio>>
     Fecha fecha_ocupa;  //fecha ocupacion
     Fecha fecha_caduci; //fecha caducidad
@@ -138,19 +138,5 @@ typedef struct{ //Estructura para devoluciones.txt
     Fecha fecha_cadu;   //fecha de caducidad
 }Devoluciones; //informacion de las devoluciones de los distintos productos incluidos en los pedidos entregados
 
-
-//Los modulos se declaran de forma global y asi se usaran en todos los modulos
-Clientes *v_clientes;
-Adminprov *v_adminprov;
-Transportistas *v_transportistas;
-Productos *v_productos;
-Categorias *v_categorias;
-Descuentos *v_descuentos;
-Descuentosclientes *v_descuentosclientes;
-Lockers *v_lockers;
-Compartimentoslockers *v_compartimentoslockers;
-Pedidos *v_pedidos;
-Productospedidos *v_productospedidos;
-Devoluciones *v_devoluciones;
 
 #endif // _DATOS_

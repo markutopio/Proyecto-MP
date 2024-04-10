@@ -166,13 +166,13 @@ int alta_productos(Productos **pro,int x){  //x es el numero de registros que te
 
     printf("Hay %i registros despues de aumentar en 1.\n\n",x);
 
-    Productos *v_productos=(Productos *)realloc(*pro,x*sizeof(Productos));
+    Productos *nuevo_reg=(Productos *)realloc(*pro,x*sizeof(Productos));
 
-    if (v_productos==NULL){
+    if (nuevo_reg==NULL){
         printf("Error al realocar memoria\n");
         return -1;
     }
-    *pro=v_productos;
+    *pro=nuevo_reg;
 
 
     printf("Introduce el nuevo id del producto: ");
@@ -275,7 +275,7 @@ int baja_productos(Productos **pro,int x){
         return -1;
     }
 
-    Productos *nuevo_reg=(Productos *)realloc(*pro,(x-1) *sizeof(Productos)); //elimina una posicion del vector que en este caso sera la ultima
+    Productos *nuevo_reg=(Productos *)realloc(*pro,(x-1)*sizeof(Productos)); //elimina una posicion del vector que en este caso sera la ultima
 
     if (nuevo_reg==NULL){
         printf("Error al realocar memoria\n");
@@ -304,7 +304,7 @@ void listado_productos(Productos *pro,int x){
 //cabecera: int intro_productos(Productos *pro,int a)
 //precondicion: pro no es NULL y x es mayor que 0
 //postcondicion: almacena los valores correspondientes a cada campo del vector de estructuras
-int intro_productos(Productos *pro,int a){
+int intro_productos(Productos **pro,int a){
     int i,sto,b;
     float x;
     char id[8],tex[51],ids[5],prodf[16];
@@ -312,7 +312,7 @@ int intro_productos(Productos *pro,int a){
     printf("Cuantos productos quieres meter: ");
     scanf("%i",&a);
 
-    if((v_productos=(Productos *)malloc(a*sizeof(Productos)))==NULL){ //se almacena memoria para emplear los registros
+    if((pro=(Productos **)malloc(a*sizeof(Productos)))==NULL){ //se almacena memoria para emplear los registros
         printf("Error");
     }else{
         for(i=0;i<a;i++){
@@ -321,14 +321,14 @@ int intro_productos(Productos *pro,int a){
         printf("Introduce el id del producto (debe seguir un orden numerico 0000000,0000001,etc): ");
         scanf("%s",id);
 
-        strcpy(pro[i].Id_prod,id);
+        strcpy((*pro)[i].Id_prod,id);
 
         fflush(stdin);
 
         printf("\nIntroduce el nombre del producto: ");
         scanf("%s",prodf);
 
-        strcpy(pro[i].nomb_prod,prodf);
+        strcpy((*pro)[i].nomb_prod,prodf);
 
         fflush(stdin);
 
@@ -337,7 +337,7 @@ int intro_productos(Productos *pro,int a){
 
         eliminar_salto(tex,51);
 
-        strcpy(pro[i].Descrip,tex);
+        strcpy((*pro)[i].Descrip,tex);
 
         fflush(stdin);
 
@@ -345,33 +345,33 @@ int intro_productos(Productos *pro,int a){
         printf("\nIntroduce el id de la categoria donde va a ir el producto(el producto debe ir en la categoria apropiada (0000,0001): ");
         scanf("%s",ids);
 
-        strcpy(pro[i].Id_categ,ids);
+        strcpy((*pro)[i].Id_categ,ids);
 
         fflush(stdin);
 
         printf("\nIntroduce el id del gestor del producto(el producto debe ser administrado por un proveedor o un administrador(0000,0001): ");
         scanf("%s",ids);
 
-        strcpy(pro[i].Id_gestor,ids);
+        strcpy((*pro)[i].Id_gestor,ids);
 
         fflush(stdin);
 
         printf("\nIntroduce el stock del producto: ");
         scanf("%i",&sto);
 
-        pro[i].stock=sto;
+        (*pro)[i].stock=sto;
 
         printf("\nIntroduce el numero maximo de dias hasta la entrega del producto: ");
         scanf("%i",&b);
 
-        pro[i].entrega=b;
+        (*pro)[i].entrega=b;
 
         printf("\nIntroduce el dinero que cuesta el producto: ");
         scanf("%f",&x);
 
         fflush(stdin);
 
-        pro[i].importe=x;
+        (*pro)[i].importe=x;
         }
         printf("\n\nHas introducido %i productos",a);
     }
@@ -399,6 +399,60 @@ int busqueda_productos(Productos *pro,int a){
     return n;
 }
 
+
+
+int modifica_categorias(Categorias *cat,int x){
+    int i,aux,num;
+    int encontrado=0;
+    char nue_tex[51],ids[5];
+    char op,s;
+
+
+    printf("Introduce el id de la categoria que quiere modificar: ");
+    scanf("%s",ids);
+    eliminar_salto(ids,5);
+
+    for(i=0;i<x;i++){
+        if(strcmp(cat[i].nomb_prod,camb)==0){
+            aux=i;
+            printf("\nEl nombre auxiliar [%s] y el almacenado [%s] son iguales\n",ids,cat[aux].Id_categ);
+
+            do{ //si modifico el nombre del producto tambien deberia modificar la categoria, el gestor y la descripcion ya que un producto al cambiarse debe estar en otra categoria forzosamente
+                printf("Introduce la opcion que deseas modificar(1-modificar descripcion, 0-salir)");
+                scanf("%c",&op);
+
+                switch(op){
+
+                    case 1:
+                        printf("\nHas elegido modificar la descripcion de la categoria\n");
+                        printf("Introduce la nueva descripcion: ");
+                        fgets(nue_tex,51,stdin);
+                        eliminar_salto(nue_tex,51);
+
+                        strcpy(cat[i].Descrip,nue_tex);
+                        }
+                        break;
+
+                    case 0:  return 0;
+                        break;
+                }
+                fflush(stdin);
+
+                printf("Quieres modificar algo mas?(pulse s para si): ");
+                scanf("%c",&sino);
+            }while(sino=='s');
+            break;
+        }
+    }
+    printf("\nSe ha modificado la posicion %i",aux);
+
+    if (!encontrado) {
+        printf("No se encontró ningún registro con el DNI proporcionado.\n");
+        aux = -1; // Indica que no se encontró el DNI
+    }
+    return aux;
+}
+
 //cabecera: int alta_categorias(Categorias **cat,int x)
 //precondicion: cat no es NULL y x es mayor que 0
 //postcondicion: anade un elemento extra al vector de estructuras
@@ -409,13 +463,13 @@ int alta_categorias(Categorias **cat,int x){
 
     printf("Hay %i registros despues de aumentar en 1.\n\n",x);
 
-    Categorias *v_categorias=(Categorias *)realloc(*cat,x*sizeof(Categorias));
+    Categorias *nuevo_reg=(Categorias *)realloc(*cat,x*sizeof(Categorias));
 
-    if (v_categorias==NULL){
+    if (nuevo_reg==NULL){
         printf("Error al realocar memoria\n");
         return -1;
     }
-    *cat=v_categorias;
+    *cat=nuevo_reg;
 
 
     printf("Introduce el nuevo id de la categoria: ");
@@ -487,14 +541,14 @@ int baja_categorias(Categorias **cat,int x){
 //cabecera: int intro_productos(Productos *pro,int a)
 //precondicion: cat no es NULL y x es mayor que 0
 //postcondicion: almacena los valores correspondientes a cada campo del vector de estructuras
-int intro_categorias(Categorias *cat,int a){
+int intro_categorias(Categorias **cat,int a){
     int i;
     char tex[51],ids[5];
 
     printf("Cuantos productos quieres meter: ");
     scanf("%i",&a);
 
-    if((v_categorias=(Categorias *)malloc(a*sizeof(Categorias)))==NULL){ //se almacena memoria para emplear los registros
+    if((cat=(Categorias **)malloc(a*sizeof(Categorias)))==NULL){ //se almacena memoria para emplear los registros
         printf("Error");
     }else{
         for(i=0;i<a;i++){
@@ -504,14 +558,14 @@ int intro_categorias(Categorias *cat,int a){
         scanf("%s",ids);
         eliminar_salto(ids,5);
 
-        strcpy(cat[i].Id_categ,ids);
+        strcpy((*cat)[i].Id_categ,ids);
         fflush(stdin);
 
         printf("\nIntroduce la descripcion del producto: ");
         fgets(tex,51,stdin);
         eliminar_salto(tex,51);
 
-        strcpy(cat[i].Descrip,tex);
+        strcpy((*cat)[i].Descrip,tex);
         }
         printf("\n\nHas introducido %i categorias",a);
     }
