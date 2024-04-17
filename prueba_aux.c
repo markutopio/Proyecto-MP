@@ -2,114 +2,235 @@
 
 int main(){
     registro *reg;
-    Productos *re;
+    Productos *p;
     Clientes *cli;
+    Categorias *cat;
 
-    int op,op2;
-    int reg_carga,reg_exacto=0; //variable 1: numero de registros cargados, variable 2: registro exacto localizado en el vector
+    int op,op2,out;
+    int num_clientes, num_datos, num_prod, num_cat; //variable 1: numero de registros cargados, variable 2: registro exacto localizado en el vector
+    int cliente_exac, datos_exac, prod_exac, cat_exac;
     char s_n;
 
-    reg_carga=N;
-
-    if((reg=(registro *)malloc(N*sizeof(registro)))==NULL){ //se almacena memoria para emplear los registros
-        printf("Error");
-    }else{
-        printf("funcionamiento correcto\n\n");
 
     do{
         fflush(stdin);
-        printf("que quieres hacer(1-guardar datos en un fichero, 2-cargar datos de fichero a estructuras, 3-modificar datos,4-almacenar en estructuras los datos, 5-alta datos, 6-consulta datos,7-baja datos)\n\n");
-        scanf("%i",&op);
+        printf("que quieres hacer: (elige un numero entre 1 a 7 (0 para salir))\n");
+        op=ventana_eleccion();
+
 
         switch(op){
-            case 1:
-                printf("\n\nIntroduce 1 para datos, 2 para clientes y 3 para productos: ");
+            case 1: //llamada a funciones de guardado en ficheros
+                printf("\n\nIntroduce 1 para datos, 2 para clientes, 3 para productos y 4 para categorias: ");
                 scanf("%i",&op2);
                 switch(op2){
                     case 1:
-                        reg_carga=guarda_fichero(reg,reg_carga); //reg_carga es el numero total de registros que se han almacenado en el fichero
-                        printf("\n\nSe han guardado %i registros",reg_carga);
+                        num_datos=guarda_fichero(reg,num_datos); //reg_carga es el numero total de registros que se han almacenado en el fichero
+                        printf("\n\nSe han guardado %i registros",num_datos);
                         break;
                     case 2:
-                        reg_carga=guarda_cliente(cli,reg_carga); //reg_carga es el numero total de registros que se han almacenado en el fichero
-                        printf("\n\nSe han guardado %i registros",reg_carga);
+                        num_clientes=guarda_cliente(cli,num_clientes); //reg_carga es el numero total de registros que se han almacenado en el fichero
+                        printf("\n\nSe han guardado %i registros",num_clientes);
                         break;
                     case 3:
-                        reg_carga=guarda_prod(&re,reg_carga);
-                        printf("\n\nSe han guardado %i registros",reg_carga);
+                        num_prod=guarda_prod(p,num_prod);
+                        printf("\n\nSe han guardado %i registros",num_prod);
                         break;
-                    case 0: return 0;
-                        break;
-                }
-
-                break;
-            case 2:
-                reg_carga=carga_fichero(&reg,reg_carga);
-                printf("\n\nSe han cargado %i registros",reg_carga);
-                break;
-            case 3:
-                ModificaDatos(reg,reg_carga);
-                break;
-            case 4:
-                printf("\n\nIntroduce 1 para datos, 2 para clientes y 3 para productos: ");
-                scanf("%i",&op2);
-
-                switch(op2){
-                    case 1:
-                        intro_datos(reg);
-                        break;
-                    case 2:
-                        introcliente(&cli,reg_carga);
-                        break;
-                    case 3:
-                        reg_carga=intro_productos(&re,reg_carga);
-                        break;
-                    case 0: return 0;
-                        break;
-                }
-
-                break;
-            case 5:
-                reg_exacto=AltaDatos(&reg,reg_carga);
-                printf("\n\nSe ha modificado el elemento %i",reg_exacto);
-                reg_carga=reg_exacto;
-                break;
-            case 6:
-                printf("\n\nIntroduce 1 para datos, 2 para clientes y 3 para productos: ");
-                scanf("%i",&op2);
-
-                switch(op2){
-                    case 1:
-                        ConsultaDatos(reg,reg_carga);
-                        break;
-                    case 2:
-                        ConsultaClientes(cli,reg_carga);
-                        break;
-                    case 3:
-                        printf("\nregcarga ahora mismo es %i",reg_carga);
-                        listado_productos(re,reg_carga);
+                    case 4:
+                        num_cat=guarda_cat(cat,num_cat);
+                        printf("\n\nSe han guardado %i registros",num_cat);
                         break;
                     case 0: return 0;
                         break;
                 }
                 break;
-            case 7:
-                reg_exacto=BajaDatos(&reg,reg_carga);
-                printf("\n\nSe ha eliminado el registro deseado");
-                reg_carga=reg_exacto;
+
+            case 2: //llamada a funciones de carga de datos desde ficheros
+                printf("\n\nIntroduce 1 para datos, 2 para clientes, 3 para productos y 4 para categorias: ");
+                scanf("%i",&op2);
+                switch(op2){
+                    case 1:
+                        num_datos=carga_fichero(&reg,num_datos); //reg_carga es el numero total de registros que se han almacenado en el fichero
+                        printf("\n\nSe han guardado %i registros",num_datos);
+                        break;
+                    case 2:
+                        num_clientes=carga_clientes(&cli,num_clientes); //reg_carga es el numero total de registros que se han almacenado en el fichero
+                        printf("\n\nSe han guardado %i registros",num_clientes);
+                        break;
+                    case 3:
+                        num_prod=carga_prod(&p,num_prod);
+                        printf("\n\nSe han guardado %i registros",num_prod);
+                        break;
+                    case 4:
+                        num_cat=carga_cat(&cat,num_cat);
+                        printf("\n\nSe han guardado %i registros",num_cat);
+                        break;
+                    case 0: return 0;
+                        break;
+                }
                 break;
+
+            case 3: //llamada a funciones de modificacion de registros
+                printf("\n\nIntroduce 1 para datos, 3 para productos y 4 para categorias: ");
+                scanf("%i",&op2);
+                switch(op2){
+                    case 1:
+                        datos_exac=ModificaDatos(reg,datos_exac);
+                        printf("\n\nSe ha modificado el registro %i",datos_exac);
+                        break;
+                    /*case 2:
+                        =ModificaCliente(cli,reg_carga);
+                        printf("\n\nSe ha modificado el registro %i",reg_exacto);
+                        break;*/
+                    case 3:
+                        prod_exac=modifica_productos(p,prod_exac);
+                        printf("\n\nSe ha modificado el registro %i",prod_exac);
+                        break;
+                    case 4:
+                        num_cat=modifica_categorias(cat,num_cat);
+                        printf("\n\nSe ha modificado el registro %i",num_cat);
+                        break;
+                    case 0: return 0;
+                        break;
+                }
+                break;
+
+            case 4: //llamada a funciones de introduccion de datos
+                printf("\n\nIntroduce 1 para datos, 2 para clientes, 3 para productos y 4 para categorias: ");
+                scanf("%i",&op2);
+                switch(op2){
+                    case 1:
+                        num_datos=intro_datos(&reg,num_datos);
+                        printf("\n\nSe han introducido %i registros",num_datos);
+                        break;
+                    case 2:
+                        num_clientes=introcliente(&cli,num_clientes);
+                        printf("\n\nSe han introducido %i registros",num_clientes);
+                        break;
+                    case 3:
+                        num_prod=intro_productos(&p,num_prod);
+                        printf("\n\nSe han introducido %i registros",num_prod);
+                        break;
+                    case 4:
+                        num_cat=intro_categorias(&cat,num_cat);
+                        printf("\n\nSe han introducido %i registros",num_cat);
+                        break;
+                    case 0: return 0;
+                        break;
+                }
+                break;
+
+            case 5: //llamada a funciones de alta de datos
+                printf("\n\nIntroduce 1 para datos, 3 para productos y 4 para categorias: ");
+                scanf("%i",&op2);
+                switch(op2){
+                    case 1:
+                        datos_exac=AltaDatos(&reg,num_datos);
+                        printf("\n\nSe ha anadido un elemento teniendo ahora %i elementos",datos_exac);
+                        num_datos=datos_exac;
+                        break;
+                    /*case 2:
+                        reg_exacto=AltaClientes(&cli,reg_carga);
+                        printf("\n\nSe ha anadido un elemento teniendo ahora %i elementos",reg_exacto);
+                        reg_carga=reg_exacto;
+                        break;*/
+                    case 3:
+                        prod_exac=alta_productos(&p,num_prod);
+                        printf("\n\nSe ha anadido un elemento teniendo ahora %i elementos",prod_exac);
+                        num_prod=prod_exac;
+                        break;
+                    case 4:
+                        cat_exac=alta_categorias(&cat,num_cat);
+                        printf("\n\nSe ha anadido un elemento teniendo ahora %i elementos",cat_exac);
+                        num_cat=cat_exac;
+                        break;
+                    case 0: return 0;
+                        break;
+                }
+                break;
+
+            case 6: //llamada a funciones de consulta de datos
+                printf("\n\nIntroduce 1 para datos, 2 para clientes, 3 para productos y 4 para categorias: ");
+                scanf("%i",&op2);
+
+                switch(op2){
+                    case 1:
+                        ConsultaDatos(reg,num_datos);
+                        break;
+                    case 2:
+                        ConsultaClientes(cli,num_clientes);
+                        break;
+                    case 3:
+                        listado_productos(p,num_prod);
+                        break;
+                    case 4:
+                        listado_categorias(cat,num_cat);
+                        break;
+                    case 0: return 0;
+                        break;
+                }
+                break;
+
+            case 7: //llamada a funciones de baja de datos o eliminacion
+                printf("\n\nIntroduce 1 para datos, 3 para productos y 4 para categorias: ");
+                scanf("%i",&op2);
+                switch(op2){
+                    case 1:
+                        datos_exac=BajaDatos(&reg,num_datos);
+                        printf("\n\nSe ha eliminado el registro %i",datos_exac);
+                        num_datos=datos_exac;
+                        break;
+                    /*case 2:
+                        reg_exacto=BajaClientes(&cli,reg_carga);
+                        printf("\n\nSe ha eliminado el registro %i",reg_exacto);
+                        reg_carga=reg_exacto;
+                        break;*/
+                    case 3:
+                        prod_exac=baja_productos(&p,num_prod);
+                        printf("\n\nSe ha eliminado el registro %i",prod_exac);
+                        num_prod=prod_exac;
+                        break;
+                    case 4:
+                        cat_exac=baja_categorias(&cat,num_cat);
+                        printf("\n\nSe ha eliminado el registro %i",cat_exac);
+                        num_cat=cat_exac;
+                        break;
+                    case 0: return 0;
+                        break;
+                }
+                break;
+
+           /* case 8: //llamada a funciones de busqueda de datos
+                printf("\n\nIntroduce 1 para datos, 2 para clientes, 3 para productos y 4 para categorias: ");
+                scanf("%i",&op2);
+*/
             case 0: return 0;
                 break;
         }
 
         fflush(stdin);
-        printf("\n\nSi quieres volver a elegir pulse 's': ");
+        printf("\nIntroduce una opcion: (s para seguir, n para salir): ");
         scanf("%c",&s_n);
-    }while(s_n=='s');
 
-        free(reg); //se libera la memoria
-    }
+       do{
+        if(s_n=='s' || s_n=='S'){
+            out=0;
+        }else{
+            if(s_n=='n' || s_n=='N'){
+                out=1;
+            }else{
+                printf("\nEntrada no valida, introduce s, S, n o N\n");
+                out=2;
+                }
+            }
+       }while(out==2);
+    }while(out==0);
+
+    free(reg); //se libera la memoria
+    free(cli);  //se libera la memoria
+    free(p);    //se libera la memoria
+    free(cat);   //se libera la memoria
 }
+
 
 int guarda_fichero(registro *r,int a){
     FILE *f;
@@ -139,17 +260,17 @@ int carga_fichero(registro **reg,int x){ //x es el numero de registros que se ha
 
     if((f=fopen("datos.txt","r"))!=NULL){
         while(fgets(linea,100,f)){
-            registro *nuevo_reg = (registro *)realloc(*reg, (i+1) * sizeof(registro));
+            registro *nuevo_reg=(registro *)realloc(*reg,(i+1)*sizeof(registro));
 
-            if (nuevo_reg == NULL) {
+            if (nuevo_reg==NULL){
                 printf("Error al realocar memoria\n");
                 fclose(f); // Cerramos el archivo antes de salir
                 return -1;
             }
 
-            *reg = nuevo_reg;
+                *reg=nuevo_reg;
                 printf("\n%i linea",i+1);
-                token=strtok(linea, "-");
+                token=strtok(linea,"-");
                 strcpy((*reg)[i].dni,token);
 
                 token=strtok(NULL,"\n");//último de la linea \n
@@ -171,7 +292,7 @@ int carga_fichero(registro **reg,int x){ //x es el numero de registros que se ha
 //cabecera: int ModificaDatos(registro *reg,int x)
 //precondicion: teniendo una serie de registros en un vector de registros
 //postcondicion: devuelve la posicion del elemento que se ha modificado y si se ha modificado el elemento
-void ModificaDatos(registro *reg,int x){
+int ModificaDatos(registro *reg,int x){
     int i,aux,ed;
     int encontrado=0;
     char posicion[10],camb[10];
@@ -204,17 +325,25 @@ void ModificaDatos(registro *reg,int x){
         printf("No se encontró ningún registro con el DNI proporcionado.\n");
         aux = -1; // Indica que no se encontró el DNI
     }
+    return aux;
 }
 
 
 //cabecera: void intro_datos(registro *r,int x,char *c)
 //precondicion:
 //postcondicion: se almacenan una serie de valores al principio del programa en el vector de registros
-void intro_datos(registro *r){
+int intro_datos(registro **r,int a){
     int i,x;
     char c[10];
     fflush(stdin);
-    for(i=0;i<N;i++){
+
+    printf("Cuantos productos quieres meter: ");
+    scanf("%i",&a);
+
+    if((r=(registro **)malloc(a*sizeof(registro)))==NULL){ //se almacena memoria para emplear los registros
+        printf("Error");
+    }else{
+        for(i=0;i<N;i++){
         printf("\nIntroduce tu dni: ");
         fgets(c,10,stdin);
 
@@ -231,9 +360,11 @@ void intro_datos(registro *r){
 
         printf("\nEl valor es %d\n",x);
 
-        strcpy(r[i].dni,c);
-        r[i].edad=x;
+        strcpy((*r)[i].dni,c);
+        (*r)[i].edad=x;
+        }
     }
+    return a;
 }
 
 
@@ -354,7 +485,7 @@ void ConsultaClientes(Clientes *reg,int can_regs){
     }
 }
 
-void introcliente(Clientes **cli,int a){
+int introcliente(Clientes **cli,int a){
     int i;
     float x;
     char c[8];
@@ -384,8 +515,26 @@ void introcliente(Clientes **cli,int a){
         (*cli)[i].Cartera=x;
         }
     }
+    return a;
 }
 
+int ventana_eleccion(){
+    int i;
+
+    do{
+        printf("\n0-salir del menu eleccion");
+        printf("\n1-guardar datos en un fichero");
+        printf("\n2-cargar datos de fichero a estructuras");
+        printf("\n3-modificar datos en estructuras");
+        printf("\n4-almacenar los datos en estructuras");
+        printf("\n5-dar de alta datos");
+        printf("\n6-consultar datos en estructuras");
+        printf("\n7-dar de baja datos\n");
+        scanf("%i",&i);
+    }while(i<0 || i>7);
+
+    return i;
+}
 //bajadatos elimina una posicion del vector de registros
 
 //entonces si tu tienes N posiciones y eliminas la posicion i te queda que el vector tiene N-1 posiciones
