@@ -111,18 +111,12 @@ switch (opcion) {
         }
     }
 }
-void menu_presentacion_cliente(){
-int opcion;
-printf("\n\nElija la opcion que desee\n");
-printf("*---------------------------------------*");
-puts("1. Perfil");
-puts("2. Consulta de cartera");
-puts("3. Agregar dinero a la cartera");
-puts("4. Retirar dinero de la cartera");
-puts("5. Cerrar sesion");
-printf("*---------------------------------------*");
-scanf("%d",&opcion);
-switch (opcion) {
+void menu_presentacion_cliente(int a){
+int op,i=0;
+do{
+    op=ventana_usuario();
+    i++;
+    switch (opcion) {
             case 1:
                 Consultarperfilusu();
                 break;
@@ -140,22 +134,17 @@ switch (opcion) {
                 break;
             default:
                 printf("Opción no válida.\\n");
-        }
+            }
+    }while(op>i);
+
 }
 
 //menu proveedor
 
 void menu_presentacion_proveedor(){
-int opcion;
-printf("\n\nElija la opcion que desee\n");
-printf("*---------------------------------------*");
-puts("1. Perfil");
-puts("2. Consulta de productos");
-puts("3. Consulta de pedidos");
-puts("4. Cerrar sesion");
-printf("*---------------------------------------*");
-scanf("%d",&opcion);
-switch (opcion) {
+int op,i=0;
+do{
+            op=ventana_proveed();
             case 1:
                 Consultarperfilprov();
                 break;
@@ -170,7 +159,7 @@ switch (opcion) {
                 break;
             default:
                 printf("Opción no válida.\\n");
-        }
+}
 }
 
 void menu_inicio_sesion_proveedores(){
@@ -199,16 +188,10 @@ void menu_inicio_sesion_proveedores(){
 //menu Transportistas
 
 void menu_presentacion_transportista(){
-int opcion;
-printf("\n\nElija la opcion que desee\n");
-printf("*---------------------------------------*");
-puts("1. Perfil");
-puts("2. Consulta de repartos");
-puts("3. Consulta de retornos");
-puts("4. Cerrar sesion");
-printf("*---------------------------------------*");
-scanf("%d",&opcion);
-switch (opcion) {
+int op,i=0;
+do{
+   op=ventana_transp();
+   switch (opcion) {
             case 1:
                 Consultarperfilprov();
                 break;
@@ -224,6 +207,7 @@ switch (opcion) {
             default:
                 printf("Opción no válida.\\n");
         }
+}
 }
 
 void menu_inicio_sesion_transportistas(){
@@ -251,22 +235,10 @@ void menu_inicio_sesion_transportistas(){
 //menu admin
 
 void menu_presentacion_admin(){
-int opcion;
-printf("\n\nElija la opcion que desee\n");
-printf("*---------------------------------------*");
-puts("1. Perfil");
-puts("2. Consulta de clientes");
-puts("3. Consulta de proveedores");
-puts("4. Consulta de productos");
-puts("5. Consulta de categorias");
-puts("6. Consulta de pedidos");
-puts("7. Consulta de transportistas");
-puts("8. Consulta de descuentos");
-puts("9. Consulta de devoluciones");
-puts("10. Cerrar sesion");
-printf("*---------------------------------------*");
-scanf("%d",&opcion);
-switch (opcion) {
+int op,i=0;
+do{
+    op=ventana_admin();
+    switch (opcion){
             case 1:
                 Consultarperfiladmin();
                 break;
@@ -299,6 +271,8 @@ switch (opcion) {
                 break;
             default:
                 printf("Opción no válida.\\n");
+}
+
         }
 }
 
@@ -323,6 +297,71 @@ void menu_inicio_sesion_admin(){
             default:
                 printf("Opción no válida.\\n");
         }
+}
+
+
+int ventana_usuario(){
+int opcion;
+do{
+    printf("\n\nElija la opcion que desee\n");
+    printf("*---------------------------------------*");
+    puts("1. Perfil");
+    puts("2. Consulta de cartera");
+    puts("3. Agregar dinero a la cartera");
+    puts("4. Retirar dinero de la cartera");
+    puts("5. Cerrar sesion");
+    printf("*---------------------------------------*");
+    scanf("%d",&opcion);
+}while(1<=opcion || opcion>=5)
+
+return opcion;
+}
+
+int ventana_admin(){
+int opcion;
+do{
+    printf("\n\nElija la opcion que desee\n");
+    printf("*---------------------------------------*");
+    puts("1. Perfil");
+    puts("2. Consulta de clientes");
+    puts("3. Consulta de proveedores");
+    puts("4. Consulta de productos");
+    puts("5. Consulta de categorias");
+    puts("6. Consulta de pedidos");
+    puts("7. Consulta de transportistas");
+    puts("8. Consulta de descuentos");
+    puts("9. Consulta de devoluciones");
+    puts("10. Cerrar sesion");
+    printf("*---------------------------------------*");
+    scanf("%d",&opcion);
+}while(1<=opcion || opcion>=10)
+return opcion;
+}
+
+int ventana_proveed(){
+int opcion;
+do{
+    printf("\nElija la opcion que desee\n");
+    puts("1. Iniciar sesion\n");
+    puts("2. Crear cuenta nueva\n");
+    puts("3. Salir de la aplicacion\n");
+    scanf("%d",&opcion);
+}while(1<=opcion || opcion>=3);
+return opcion;
+}
+
+int ventana_transp(){
+do{
+    printf("\n\nElija la opcion que desee\n");
+    printf("*---------------------------------------*");
+    puts("1. Perfil");
+    puts("2. Consulta de repartos");
+    puts("3. Consulta de retornos");
+    puts("4. Cerrar sesion");
+    printf("*---------------------------------------*");
+    scanf("%d",&opcion);
+}while(1<=opcion || opcion>=4);
+return opcion;
 }
 
 
