@@ -1,29 +1,33 @@
 #include "productos.h"
 #include "prueba_aux.h"
 
+
+//cabecera: int modifica_productos(Productos *pro,int x)
+//precondicion: pro no es NULL y x es mayor que 0
+//postcondicion: devuelve la posicion en la que se ha realizado la modificacion de uno de los campos de los registros o de varios
 int modifica_productos(Productos *pro,int x){
-    int i,aux,num;
+    int i,aux,num,op;
     int encontrado=0;
-    char posicion[16],camb[16],nue_tex[51],ids[5];
-    char op,sino,s;
+    char posicion[16],nue_tex[51],ids[5],id_a[8];
+    char sino,s;
     float dineros;
 
-    printf("Introduce el nombre del producto que quiere modificar: ");
-    scanf("%s",camb);
-    eliminar_salto(camb,16);
+    printf("Introduce el id del producto que quiere modificar: ");
+    scanf("%s",id_a);
+    eliminar_salto(id_a,8);
 
     for(i=0;i<x;i++){
-        if(strcmp(pro[i].nomb_prod,camb)==0){
+        if(strcmp(pro[i].Id_prod,id_a)==0){
             aux=i;
-            printf("\nEl nombre auxiliar [%s] y el almacenado [%s] son iguales\n",camb,pro[aux].nomb_prod);
+            printf("\nEl id auxiliar [%s] y el almacenado [%s] son iguales\n",id_a,pro[aux].Id_prod);
 
             do{ //si modifico el nombre del producto tambien deberia modificar la categoria, el gestor y la descripcion ya que un producto al cambiarse debe estar en otra categoria forzosamente
                 printf("Introduce la opcion que deseas modificar(1-modificar todo, 2-modificar categoria, 3-modificar gestor, 4-modificar stock, 5-modificar dias hasta entrega o 6-modificar importe)");
-                scanf("%c",&op);
+                scanf("%i",&op);
 
                 switch(op){
                     case 1: //se modifican todos los elementos de ese id excepto el propio id
-                        printf("\n\nHas elegido modificar todo(el id se mantendra igual \n");
+                        printf("\n\nHas elegido modificar todo(el id se mantendra igual \n\n");
 
 
                         printf("\nIntroduce el nuevo nombre del objeto: ");
@@ -78,7 +82,7 @@ int modifica_productos(Productos *pro,int x){
                         break;
 
                     case 2:
-                        printf("\nNo es recomendable cambiar la categoria de un producto que esta en la categoria correcta\n");
+                        printf("\n\nNo es recomendable cambiar la categoria de un producto que esta en la categoria correcta\n\n");
                         printf("En caso de que quiera continuar pulse s: ");
                         scanf("%c",&s);
 
@@ -94,8 +98,7 @@ int modifica_productos(Productos *pro,int x){
                         break;
 
                     case 3:
-                        printf("\nHas elegido cambiar el id_gestor\n");
-                        fflush(stdin);
+                        printf("\n\nHas elegido cambiar el id_gestor\n\n");
 
                         printf("Introduce el nuevo id del gestor: ");
                         scanf("%s",ids);
@@ -105,7 +108,7 @@ int modifica_productos(Productos *pro,int x){
                         break;
 
                     case 4:
-                        printf("\nHas elegido cambiar el stock del producto\n");
+                        printf("\n\nHas elegido cambiar el stock del producto\n\n");
 
                         printf("Introduce el nuevo stock del producto: ");
                         scanf("%i",&num);
@@ -115,7 +118,7 @@ int modifica_productos(Productos *pro,int x){
                         break;
 
                     case 5:
-                        printf("\nHas elegido cambiar el numero maximo de dias del producto para entregarse\n");
+                        printf("\n\nHas elegido cambiar el numero maximo de dias del producto para entregarse\n\n");
 
                         printf("Introduce el nuevo numero maximo de dias para entregar el producto: ");
                         scanf("%i",&num);
@@ -125,7 +128,7 @@ int modifica_productos(Productos *pro,int x){
                         break;
 
                     case 6:
-                        printf("\nHas elegido cambiar el importe del producto\n");
+                        printf("\n\nHas elegido cambiar el importe del producto\n\n");
 
                         printf("Introduce el nuevo importe del producto: ");
                         scanf("%f",&dineros);
@@ -133,6 +136,7 @@ int modifica_productos(Productos *pro,int x){
                         pro[aux].importe=dineros;
 
                         break;
+
                     case 0:  return 0;
                     break;
                 }
@@ -154,6 +158,7 @@ int modifica_productos(Productos *pro,int x){
     return aux;
 }
 
+
 //cabecera: int alta_productos(registro *pro,int x)
 //precondicion: pro no es NULL y x es mayor que 0
 //postcondicion: anade un elemento extra al vector de estructuras
@@ -166,14 +171,12 @@ int alta_productos(Productos **pro,int x){  //x es el numero de registros que te
 
     printf("Hay %i registros despues de aumentar en 1.\n\n",x);
 
-    Productos *nuevo_reg=(Productos *)realloc(*pro,x*sizeof(Productos));
+    pro=(Productos **)realloc(pro,x*sizeof(Productos)); //se utiliza realloc para aumentar en una el numero de elementos que hay en el vector
 
-    if (nuevo_reg==NULL){
+    if (pro==NULL){
         printf("Error al realocar memoria\n");
         return -1;
     }
-    *pro=nuevo_reg;
-
 
     printf("Introduce el nuevo id del producto: ");
     scanf("%s",cadena);
@@ -185,7 +188,7 @@ int alta_productos(Productos **pro,int x){  //x es el numero de registros que te
 
     printf("Introduce el nuevo nombre del producto: ");
     scanf("%s",prodf);
-    eliminar_salto(prodf,16); // Eliminamos el car�cter de nueva l�nea si existe
+    eliminar_salto(prodf,16);
 
     strcpy((*pro)[x-1].nomb_prod,prodf);
     fflush(stdin);
@@ -275,14 +278,12 @@ int baja_productos(Productos **pro,int x){
         return -1;
     }
 
-    Productos *nuevo_reg=(Productos *)realloc(*pro,(x-1)*sizeof(Productos)); //elimina una posicion del vector que en este caso sera la ultima
+    pro=(Productos **)realloc(pro,(x-1)*sizeof(Productos)); //elimina una posicion del vector que en este caso sera la ultima
 
-    if (nuevo_reg==NULL){
+    if (pro==NULL){
         printf("Error al realocar memoria\n");
         return -1;
     }
-
-    *pro=nuevo_reg;
 
     return x-1;
 }
@@ -302,7 +303,7 @@ void listado_productos(Productos *pro,int x){
 
 
 //cabecera: int intro_productos(Productos *pro,int a)
-//precondicion: pro no es NULL y x es mayor que 0
+//precondicion: pro no es NULL y x es tipo int
 //postcondicion: almacena los valores correspondientes a cada campo del vector de estructuras
 int intro_productos(Productos **pro,int a){
     int i,sto,b;
@@ -312,48 +313,47 @@ int intro_productos(Productos **pro,int a){
     printf("Cuantos productos quieres meter: ");
     scanf("%i",&a);
 
-    if((pro=(Productos **)malloc(a*sizeof(Productos)))==NULL){ //se almacena memoria para emplear los registros
+    if((*pro=(Productos *)malloc(a*sizeof(Productos)))==NULL){ //se almacena memoria para emplear los registros
         printf("Error");
     }else{
         for(i=0;i<a;i++){
 
         fflush(stdin);
-        printf("Introduce el id del producto (debe seguir un orden numerico 0000000,0000001,etc): ");
+        printf("\nIntroduce el id del producto (debe seguir un orden numerico 0000000,0000001,etc): ");
         scanf("%s",id);
+        eliminar_salto(id,8);
 
         strcpy((*pro)[i].Id_prod,id);
-
         fflush(stdin);
+
 
         printf("\nIntroduce el nombre del producto: ");
         scanf("%s",prodf);
+        eliminar_salto(prodf,16);
 
         strcpy((*pro)[i].nomb_prod,prodf);
-
         fflush(stdin);
 
         printf("\nIntroduce la descripcion del producto: ");
         fgets(tex,51,stdin);
-
         eliminar_salto(tex,51);
 
         strcpy((*pro)[i].Descrip,tex);
-
         fflush(stdin);
 
 
-        printf("\nIntroduce el id de la categoria donde va a ir el producto(el producto debe ir en la categoria apropiada (0000,0001): ");
+        printf("\nIntroduce id de la categoria donde va a ir el producto(el producto debe ir en la categoria apropiada (0000,0001): ");
         scanf("%s",ids);
+        eliminar_salto(ids,5);
 
         strcpy((*pro)[i].Id_categ,ids);
-
         fflush(stdin);
 
-        printf("\nIntroduce el id del gestor del producto(el producto debe ser administrado por un proveedor o un administrador(0000,0001): ");
+        printf("\nIntroduce el id del gestor del producto(producto debe ser administrado por un proveedor o un administrador(0000,0001)): ");
         scanf("%s",ids);
+        eliminar_salto(ids,5);
 
         strcpy((*pro)[i].Id_gestor,ids);
-
         fflush(stdin);
 
         printf("\nIntroduce el stock del producto: ");
@@ -361,19 +361,19 @@ int intro_productos(Productos **pro,int a){
 
         (*pro)[i].stock=sto;
 
+
         printf("\nIntroduce el numero maximo de dias hasta la entrega del producto: ");
         scanf("%i",&b);
 
         (*pro)[i].entrega=b;
 
+
         printf("\nIntroduce el dinero que cuesta el producto: ");
         scanf("%f",&x);
 
-        fflush(stdin);
 
         (*pro)[i].importe=x;
         }
-        printf("\n\nHas introducido %i productos",a);
     }
     return a;
 }
@@ -383,41 +383,47 @@ int intro_productos(Productos **pro,int a){
 //precondicion: pro no es NULL y x es mayor que 0
 //postcondicion: devuelve la posicion en la que se encuentra la coincidencia con la busqueda
 int busqueda_productos(Productos *pro,int a){
-    int i,n=0; //hacer condicional de si no se encuentra el valor se devuelve NULL por lo que no existiria el elemento
+    int i,n=0;
     char produc[16];
 
     printf("Introduce el producto que quieres encontrar(mete el nombre exacto sin usar mayusculas): ");
     scanf("%s",produc);
 
-    for(i=0;i<a;i++){
-        if(strcmp(pro[i].nomb_prod,produc)==0){
+    for(i=0;i<a;i++){ //se ejecuta a veces el bucle
+        if(strcmp(pro[i].nomb_prod,produc)==0){ //si se da coincidencia del producto introducido con alguno de los introducidos
             printf("Se ha encontrado el producto %s en la posicion %i",produc,i);
-            n=i;
+            n=i;    //se almacena la posicion donde se ha encontrado la coincidencia
         }
         break;
+    }
+
+    if(n==0){   //en caso de no haber encontrado coincidencia, no existira el producto
+        printf("\nNo se ha encontrado el producto ya que no existe");
     }
     return n;
 }
 
 
-
+//cabecera: int modifica_categorias(Categorias *cat,int x)
+//precondicion: pro no es NULL y x es mayor que 0
+//postcondcion: devuelve la posicion la cual se ha modificado y los campos que se han modificado
 int modifica_categorias(Categorias *cat,int x){
-    int i,aux,num;
+    int i,aux;
     int encontrado=0;
     char nue_tex[51],ids[5];
-    char op,s;
+    char op,sino;
 
 
-    printf("Introduce el id de la categoria que quiere modificar: ");
+    printf("Introduce el id de la categoria que quiere modificar: ");   //introducimos el id de la categoria que queremos modificar
     scanf("%s",ids);
     eliminar_salto(ids,5);
 
-    for(i=0;i<x;i++){
-        if(strcmp(cat[i].nomb_prod,camb)==0){
-            aux=i;
+    for(i=0;i<x;i++){   //el bucle se ejecuta x veces
+        if(strcmp(cat[i].Id_categ,ids)==0){ //en caso de haber coincidencia
+            aux=i;  //se guarda la posicion donde se ha encontrado la coincidencia
             printf("\nEl nombre auxiliar [%s] y el almacenado [%s] son iguales\n",ids,cat[aux].Id_categ);
 
-            do{ //si modifico el nombre del producto tambien deberia modificar la categoria, el gestor y la descripcion ya que un producto al cambiarse debe estar en otra categoria forzosamente
+            do{
                 printf("Introduce la opcion que deseas modificar(1-modificar descripcion, 0-salir)");
                 scanf("%c",&op);
 
@@ -430,7 +436,6 @@ int modifica_categorias(Categorias *cat,int x){
                         eliminar_salto(nue_tex,51);
 
                         strcpy(cat[i].Descrip,nue_tex);
-                        }
                         break;
 
                     case 0:  return 0;
@@ -453,6 +458,7 @@ int modifica_categorias(Categorias *cat,int x){
     return aux;
 }
 
+
 //cabecera: int alta_categorias(Categorias **cat,int x)
 //precondicion: cat no es NULL y x es mayor que 0
 //postcondicion: anade un elemento extra al vector de estructuras
@@ -470,7 +476,6 @@ int alta_categorias(Categorias **cat,int x){
         return -1;
     }
     *cat=nuevo_reg;
-
 
     printf("Introduce el nuevo id de la categoria: ");
     scanf("%s",ids);
@@ -490,6 +495,7 @@ int alta_categorias(Categorias **cat,int x){
 
     return x;
 }
+
 
 //cabecera: int baja_categorias(Categorias **cat,int x)
 //precondicion: cat no es NULL y x es mayor que 0
@@ -538,27 +544,28 @@ int baja_categorias(Categorias **cat,int x){
 }
 
 
-//cabecera: int intro_productos(Productos *pro,int a)
+//cabecera: int categorias(Productos *pro,int a)
 //precondicion: cat no es NULL y x es mayor que 0
 //postcondicion: almacena los valores correspondientes a cada campo del vector de estructuras
 int intro_categorias(Categorias **cat,int a){
     int i;
     char tex[51],ids[5];
 
-    printf("Cuantos productos quieres meter: ");
+    printf("Cuantas categorias quieres meter: ");
     scanf("%i",&a);
 
-    if((cat=(Categorias **)malloc(a*sizeof(Categorias)))==NULL){ //se almacena memoria para emplear los registros
+    if((*cat=(Categorias *)malloc(a*sizeof(Categorias)))==NULL){ //se almacena memoria para emplear los registros
         printf("Error");
     }else{
         for(i=0;i<a;i++){
 
         fflush(stdin);
-        printf("Introduce el id de la categoria (debe seguir un orden numerico 00000,00001,etc): ");
+        printf("Introduce el id de la categoria (debe seguir un orden numerico 0000,0001,etc): ");
         scanf("%s",ids);
         eliminar_salto(ids,5);
 
         strcpy((*cat)[i].Id_categ,ids);
+        printf("%s",(*cat)[i].Id_categ);
         fflush(stdin);
 
         printf("\nIntroduce la descripcion del producto: ");
@@ -566,11 +573,13 @@ int intro_categorias(Categorias **cat,int a){
         eliminar_salto(tex,51);
 
         strcpy((*cat)[i].Descrip,tex);
+        printf("[%s] [%s]",(*cat)[i].Descrip, (*cat)[i].Id_categ);
         }
         printf("\n\nHas introducido %i categorias",a);
     }
     return a;
 }
+
 
 //cabecera: void listado_categorias(Categorias *cat,int x)
 //precondicion: cat no es NULL y x es mayor que 0
@@ -585,6 +594,9 @@ void listado_categorias(Categorias *cat,int x){
 }
 
 
+//cabecera: int busqueda_categorias(Categorias *cat,int a)
+//precondicion: pro no es NULL y x es mayor que 0
+//postcondicion: busca en el vector de estructuras y devuelve la posicion de la busqueda
 int busqueda_categorias(Categorias *cat,int a){
     int i, n=0;
     char cate[5];
