@@ -7,7 +7,7 @@ int main(){
     Categorias *cat;
 
     int op,op2,out;
-    int num_clientes, num_datos, num_prod, num_cat; //variable 1: numero de registros cargados, variable 2: registro exacto localizado en el vector
+    int num_clientes=0, num_datos=0, num_prod=0, num_cat=0; //variable 1: numero de registros cargados, variable 2: registro exacto localizado en el vector
     int cliente_exac, datos_exac, prod_exac, cat_exac;
     char s_n;
 
@@ -17,6 +17,7 @@ int main(){
         printf("que quieres hacer: (elige un numero entre 1 a 7 (0 para salir))\n");
         op=ventana_eleccion();
 
+        system("cls");
 
         switch(op){
             case 1: //llamada a funciones de guardado en ficheros
@@ -210,19 +211,26 @@ int main(){
         fflush(stdin);
         printf("\nIntroduce una opcion: (s para seguir, n para salir): ");
         scanf("%c",&s_n);
+        getchar();
 
        do{
         if(s_n=='s' || s_n=='S'){
             out=0;
+            break;
         }else{
             if(s_n=='n' || s_n=='N'){
                 out=1;
+                return 0;
             }else{
                 printf("\nEntrada no valida, introduce s, S, n o N\n");
                 out=2;
+                scanf("%c",&s_n);
+                getchar();
+                system("cls");
                 }
             }
        }while(out==2);
+       system("cls");
     }while(out==0);
 
     free(reg); //se libera la memoria
@@ -325,6 +333,7 @@ int ModificaDatos(registro *reg,int x){
         printf("No se encontró ningún registro con el DNI proporcionado.\n");
         aux = -1; // Indica que no se encontró el DNI
     }
+
     return aux;
 }
 
@@ -339,11 +348,12 @@ int intro_datos(registro **r,int a){
 
     printf("Cuantos productos quieres meter: ");
     scanf("%i",&a);
+    getchar();
 
-    if((r=(registro **)malloc(a*sizeof(registro)))==NULL){ //se almacena memoria para emplear los registros
+    if((*r=(registro *)malloc(a*sizeof(registro)))==NULL){ //se almacena memoria para emplear los registros
         printf("Error");
     }else{
-        for(i=0;i<N;i++){
+        for(i=0;i<a;i++){
         printf("\nIntroduce tu dni: ");
         fgets(c,10,stdin);
 
@@ -360,8 +370,8 @@ int intro_datos(registro **r,int a){
 
         printf("\nEl valor es %d\n",x);
 
-        strcpy((*r)[i].dni,c);
-        (*r)[i].edad=x;
+        strcpy(((*r)[i].dni),c);
+        ((*r)[i].edad)=x;
         }
     }
     return a;
@@ -380,7 +390,7 @@ int AltaDatos(registro **reg,int x){ //x es el numero de registros que tenemos y
 
     printf("Hay %i registros después de aumentar en 1.\n\n",x);
 
-    registro *nuevo_reg=(registro *)realloc(*reg,x *sizeof(registro));
+    registro *nuevo_reg=(registro *)realloc(*reg,x*sizeof(registro));
 
     if (nuevo_reg==NULL){
         printf("Error al realocar memoria\n");
