@@ -1,5 +1,4 @@
 #include "moduloguardar.h"
-#include "datos.h"
 
 //cabecera: int guarda_cliente(registro *r, int a)
 //precondicion: se debe de iniciar el fichero para guardar los datos (puede dar error al hacer el fopen por memoria)
@@ -11,9 +10,9 @@ int guarda_cliente(Clientes *r, int a){
     f=fopen("clientes.txt","w"); //apertura de fichero
     fflush(stdin);
     for(i=0;i<a-1;i++){ //N veces para que haya saltos de linea
-        fprintf(f,"%s-%s-%s-%s-%s-%s-%s-%f\n",r[i].Id_cliente,r[i].Nomb_cliente,r[i].Dir_cliente,r[i].Localidad,r[i].Provincia,r[i].email,r[i].Contrasena,r[i].Cartera); //los valores se guardan en el fichero
+        fprintf(f,"%s-%s-%s-%s-%s-%s-%s-%.2f\n",r[i].Id_cliente,r[i].Nomb_cliente,r[i].Dir_cliente,r[i].Localidad,r[i].Provincia,r[i].email,r[i].Contrasena,r[i].Cartera); //los valores se guardan en el fichero
     }
-    fprintf(f,"%s-%s-%s-%s-%s-%s-%s-%f",r[i].Id_cliente,r[i].Nomb_cliente,r[i].Dir_cliente,r[i].Localidad,r[i].Provincia,r[i].email,r[i].Contrasena,r[i].Cartera); //los valores se guardan en el fichero
+    fprintf(f,"%s-%s-%s-%s-%s-%s-%s-%.2f",r[i].Id_cliente,r[i].Nomb_cliente,r[i].Dir_cliente,r[i].Localidad,r[i].Provincia,r[i].email,r[i].Contrasena,r[i].Cartera); //los valores se guardan en el fichero
 
     fclose(f); //se cierra el fichero
     return (a);
@@ -49,9 +48,9 @@ int guarda_prod(Productos *r, int a){
     f=fopen("productos.txt","w"); //apertura de fichero
     fflush(stdin);
     for(i=0;i<a-1;i++){ //N veces para que haya saltos de linea
-        fprintf(f,"%s-%s-%s-%s-%s-%d-%d-%f\n",r[i].Id_prod,r[i].nomb_prod,r[i].Descrip,r[i].Id_categ,r[i].Id_gestor[i],r[i].stock,r[i].entrega,r[i].importe); //los valores se guardan en el fichero
+        fprintf(f,"%s-%s-%s-%s-%s-%d-%d-%.2f\n",r[i].Id_prod,r[i].nomb_prod,r[i].Descrip,r[i].Id_categ,r[i].Id_gestor,r[i].stock,r[i].entrega,r[i].importe); //los valores se guardan en el fichero
     }
-    fprintf(f,"%s-%s-%s-%s-%s-%d-%d-%f",r[i].Id_prod,r[i].nomb_prod,r[i].Descrip,r[i].Id_categ,r[i].Id_gestor[i],r[i].stock,r[i].entrega,r[i].importe); //los valores se guardan en el fichero
+    fprintf(f,"%s-%s-%s-%s-%s-%d-%d-%.2f",r[i].Id_prod,r[i].nomb_prod,r[i].Descrip,r[i].Id_categ,r[i].Id_gestor,r[i].stock,r[i].entrega,r[i].importe); //los valores se guardan en el fichero
 
     fclose(f); //se cierra el fichero
     return (a);
@@ -65,6 +64,7 @@ int guarda_cat(Categorias *r, int a){
     FILE *f;
     int i;
 
+    printf("\nSe ha accedido a guarda categorias\n");
     f=fopen("categorias.txt","w"); //apertura de fichero
     fflush(stdin);
     for(i=0;i<a-1;i++){ //N veces para que haya saltos de linea
@@ -87,9 +87,9 @@ int guarda_desc(Descuentos *r, int a){
     f=fopen("descuentos.txt","w"); //apertura de fichero
     fflush(stdin);
     for(i=0;i<a-1;i++){ //N veces para que haya saltos de linea
-        fprintf(f,"%s-%s-%s-%s-%f-%s\n",r[i].Id_cod,r[i].Descrip,r[i].Tipo_des,r[i].Estado_act,r[i].Importe,r[i].Aplicable); //los valores se guardan en el fichero
+        fprintf(f,"%s-%s-%s-%s-%.2f-%s\n",r[i].Id_cod,r[i].Descrip,r[i].Tipo_des,r[i].Estado_act,r[i].Importe,r[i].Aplicable); //los valores se guardan en el fichero
     }
-    fprintf(f,"%s-%s-%s-%s-%f-%s",r[i].Id_cod,r[i].Descrip,r[i].Tipo_des,r[i].Estado_act,r[i].Importe,r[i].Aplicable); //los valores se guardan en el fichero
+    fprintf(f,"%s-%s-%s-%s-%.2f-%s",r[i].Id_cod,r[i].Descrip,r[i].Tipo_des,r[i].Estado_act,r[i].Importe,r[i].Aplicable); //los valores se guardan en el fichero
 
     fclose(f); //se cierra el fichero
     return (a);
@@ -144,9 +144,9 @@ int guarda_compartlockers(Compartimentoslockers *r, int a){
     f=fopen("compartimentoslockers.txt","w"); //apertura de fichero
     fflush(stdin);
     for(i=0;i<a-1;i++){ //N veces para que haya saltos de linea
-        fprintf(f,"%s-%d-%d-%c-%02d/%02d/%04d-%02d/%02d/%04d\n",r[i].Id_locker,r[i].Num_comp,r[i].Cod_locker,r[i].Estado,r[i].fecha_ocupa.dia,r[i].fecha_ocupa.mes,r[i].fecha_ocupa.anio,r[i].fecha_caduci.dia,r[i].fecha_caduci.mes,r[i].fecha_caduci.anio); //los valores se guardan en el fichero
+        fprintf(f,"%s-%d-%d-%s-%02d/%02d/%04d-%02d/%02d/%04d\n",r[i].Id_locker,r[i].Num_comp,r[i].Cod_locker,r[i].Estado,r[i].fecha_ocupa.dia,r[i].fecha_ocupa.mes,r[i].fecha_ocupa.anio,r[i].fecha_caduci.dia,r[i].fecha_caduci.mes,r[i].fecha_caduci.anio); //los valores se guardan en el fichero
     }
-    fprintf(f,"%s-%d-%d-%c-%02d/%02d/%04d-%02d/%02d/%04d",r[i].Id_locker,r[i].Num_comp,r[i].Cod_locker,r[i].Estado,r[i].fecha_ocupa.dia,r[i].fecha_ocupa.mes,r[i].fecha_ocupa.anio,r[i].fecha_caduci.dia,r[i].fecha_caduci.mes,r[i].fecha_caduci.anio); //los valores se guardan en el fichero
+    fprintf(f,"%s-%d-%d-%s-%02d/%02d/%04d-%02d/%02d/%04d",r[i].Id_locker,r[i].Num_comp,r[i].Cod_locker,r[i].Estado,r[i].fecha_ocupa.dia,r[i].fecha_ocupa.mes,r[i].fecha_ocupa.anio,r[i].fecha_caduci.dia,r[i].fecha_caduci.mes,r[i].fecha_caduci.anio); //los valores se guardan en el fichero
 
     fclose(f); //se cierra el fichero
     return (a);
@@ -165,7 +165,7 @@ int guarda_ped(Pedidos *r, int a){
     for(i=0;i<a-1;i++){ //N veces para que haya saltos de linea
         fprintf(f,"%s-%02d/%02d/%04d-%s-%c-%s-%s\n",r[i].Id_pedido,r[i].fecha_pedi.dia,r[i].fecha_pedi.mes,r[i].fecha_pedi.anio,r[i].Id_cliente,r[i].Lugar,r[i].Id_locker,r[i].Id_cod); //los valores se guardan en el fichero
     }
-    fprintf(f,"%s-%02d/%02d/%04d-%s-%s-%s-%s",r[i].Id_pedido,r[i].fecha_pedi.dia,r[i].fecha_pedi.mes,r[i].fecha_pedi.anio,r[i].Id_cliente,r[i].Lugar,r[i].Lugar,r[i].Id_locker,r[i].Id_cod); //los valores se guardan en el fichero
+    fprintf(f,"%s-%02d/%02d/%04d-%s-%c-%s-%s",r[i].Id_pedido,r[i].fecha_pedi.dia,r[i].fecha_pedi.mes,r[i].fecha_pedi.anio,r[i].Id_cliente,r[i].Lugar,r[i].Id_locker,r[i].Id_cod); //los valores se guardan en el fichero
 
     fclose(f); //se cierra el fichero
     return (a);
@@ -184,7 +184,7 @@ int guarda_pedprod(Productospedidos *r, int a){
     for(i=0;i<a-1;i++){ //N veces para que haya saltos de linea
         fprintf(f,"%s-%s-%d-%02d/%02d/%04d-%f-%c-%s-%s-%d-%02d/%02d/%04d\n",r[i].Id_pedido,r[i].Id_prod,r[i].Num_unid,r[i].fecha_entre.dia,r[i].fecha_entre.mes,r[i].fecha_entre.anio,r[i].Importe,r[i].Estado_ped,r[i].Id_transp,r[i].Id_locker,r[i].Cod_locker,r[i].fecha_entre_devo.dia,r[i].fecha_entre_devo.mes,r[i].fecha_entre_devo.anio); //los valores se guardan en el fichero
     }
-    fprintf(f,"%s-%s-%d-%02d/%02d/%04d-%f-%s-%s-%s-%d-%02d/%02d/%04d",r[i].Id_pedido,r[i].Id_prod,r[i].Num_unid,r[i].fecha_entre.dia,r[i].fecha_entre.mes,r[i].fecha_entre.anio,r[i].Importe,r[i].Estado_ped,r[i].Id_transp,r[i].Id_locker,r[i].Cod_locker,r[i].fecha_entre_devo.dia,r[i].fecha_entre_devo.mes,r[i].fecha_entre_devo.anio); //los valores se guardan en el fichero
+    fprintf(f,"%s-%s-%d-%02d/%02d/%04d-%f-%c-%s-%s-%d-%02d/%02d/%04d",r[i].Id_pedido,r[i].Id_prod,r[i].Num_unid,r[i].fecha_entre.dia,r[i].fecha_entre.mes,r[i].fecha_entre.anio,r[i].Importe,r[i].Estado_ped,r[i].Id_transp,r[i].Id_locker,r[i].Cod_locker,r[i].fecha_entre_devo.dia,r[i].fecha_entre_devo.mes,r[i].fecha_entre_devo.anio); //los valores se guardan en el fichero
 
 
     fclose(f); //se cierra el fichero

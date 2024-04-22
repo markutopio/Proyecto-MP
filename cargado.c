@@ -6,7 +6,6 @@
 //postcondicion: devuelve los valores almacenados en el vector de registros
 int carga_clientes(Clientes **reg,int x)  //x es el numero de registros que se han guardado
 {
-    printf("\nacceso correcto a carga\n");
     FILE *f;
     char linea[200];
     *reg=NULL;
@@ -21,12 +20,11 @@ int carga_clientes(Clientes **reg,int x)  //x es el numero de registros que se h
 
             if (nuevo_reg==NULL)
             {
-                printf("Error al realocar memoria\n");
+                printf("\nError al realocar memoria\n");
                 fclose(f); // Cerramos el archivo antes de salir
                 return -1;
             }
             *reg=nuevo_reg;
-            printf("\n%i linea",i+1);
             token=strtok(linea,"-");
             strcpy((*reg)[i].Id_cliente,token);
 
@@ -58,14 +56,13 @@ int carga_clientes(Clientes **reg,int x)  //x es el numero de registros que se h
             token=strtok(NULL,"\n");
             (*reg)[i].Cartera=atof(token);
 
-            printf("\nId cliente [%s] Nombre cliente [%s] Direccion [%s] Localidad [%s] Provincia [%s] email [%s] Contrasena [%s] Cartera [%f] \n",(*reg)[i].Id_cliente,(*reg)[i].Nomb_cliente,(*reg)[i].Dir_cliente,(*reg)[i].Localidad,(*reg)[i].Provincia,(*reg)[i].email,(*reg)[i].Contrasena,(*reg)[i].Cartera);
             i++;
         }
     }
-    printf ("Se ha leido el fichero con %d registros \n\n",i);
+    printf ("Se ha leido el fichero clientes.txt con %d registros \n",i);
     for(j=0; j<i; j++)
     {
-        printf("\nId cliente [%s] Nombre cliente[%s] Direccion cliente[%s] Localidad[%s] Provincia[%s] email[%s] Contrasena[%s] Cartera[%f] \n",(*reg)[j].Id_cliente,(*reg)[j].Nomb_cliente,(*reg)[j].Dir_cliente,(*reg)[j].Localidad,(*reg)[j].Provincia,(*reg)[j].email,(*reg)[j].Contrasena,(*reg)[j].Cartera);
+        printf("\nId cliente [%s] Nombre cliente[%s] Direccion cliente[%s] Localidad[%s] Provincia[%s] email[%s] Contrasena[%s] Cartera[%.2f] \n",(*reg)[j].Id_cliente,(*reg)[j].Nomb_cliente,(*reg)[j].Dir_cliente,(*reg)[j].Localidad,(*reg)[j].Provincia,(*reg)[j].email,(*reg)[j].Contrasena,(*reg)[j].Cartera);
     }
     fclose(f);
     return i;
@@ -76,7 +73,6 @@ int carga_clientes(Clientes **reg,int x)  //x es el numero de registros que se h
 //postcondicion: devuelve los valores almacenados en el vector de registros
 int carga_adminprov(Adminprov **reg,int x)  //x es el numero de registros que se han guardado
 {
-    printf("\nacceso correcto a carga\n");
     FILE *f;
     char linea[110];
     *reg=NULL;
@@ -91,12 +87,11 @@ int carga_adminprov(Adminprov **reg,int x)  //x es el numero de registros que se
 
             if (nuevo_reg==NULL)
             {
-                printf("Error al realocar memoria\n");
+                printf("\nError al realocar memoria\n");
                 fclose(f); // Cerramos el archivo antes de salir
                 return -1;
             }
             *reg=nuevo_reg;
-            printf("\n%i linea",i+1);
             token=strtok(linea, "-");
             strcpy((*reg)[i].Id_empresa,token);
 
@@ -114,16 +109,15 @@ int carga_adminprov(Adminprov **reg,int x)  //x es el numero de registros que se
 
 
             token=strtok(NULL,"\n");
-            (*reg)[i].Perfil_usuario=token[0];
+            strcpy((*reg)[i].Perfil_usuario,token);
 
-            printf("\nId empresa [%s] Nombre empresa[%s] email[%s] Contrasena[%s] Perfil_usuario[%c] \n",(*reg)[i].Id_empresa,(*reg)[i].Nombre_empre,(*reg)[i].email,(*reg)[i].Contrasena,(*reg)[i].Perfil_usuario);
             i++;
         }
     }
-    printf ("Se ha leido el fichero con %d registros \n\n",i);
+    printf ("Se ha leido el fichero admin.txt con %d registros \n",i);
     for(j=0; j<i; j++)
     {
-        printf("\nId empresa [%s] Nombre empresa[%s] email[%s] Contrasena[%s] Perfil_usuario[%c] \n",(*reg)[j].Id_empresa,(*reg)[j].Nombre_empre,(*reg)[j].email,(*reg)[j].Contrasena,(*reg)[j].Perfil_usuario);
+        printf("\nId empresa [%s] Nombre empresa[%s] email[%s] Contrasena[%s] Perfil_usuario[%s] \n",(*reg)[j].Id_empresa,(*reg)[j].Nombre_empre,(*reg)[j].email,(*reg)[j].Contrasena,(*reg)[j].Perfil_usuario);
     }
     fclose(f);
     return i;
@@ -134,7 +128,6 @@ int carga_adminprov(Adminprov **reg,int x)  //x es el numero de registros que se
 //postcondicion: devuelve los valores almacenados en el vector de registros
 int carga_prod(Productos **reg,int x)  //x es el numero de registros que se han guardado
     {
-        printf("\nacceso correcto a carga\n");
         FILE *f;
         char linea[130];
         *reg=NULL;
@@ -149,12 +142,11 @@ int carga_prod(Productos **reg,int x)  //x es el numero de registros que se han 
 
                 if (nuevo_reg==NULL)
                 {
-                    printf("Error al realocar memoria\n");
+                    printf("\nError al realocar memoria\n");
                     fclose(f); // Cerramos el archivo antes de salir
                     return -1;
                 }
                 *reg = nuevo_reg;
-                printf("\n%i linea",i+1);
                 token=strtok(linea,"-");
                 strcpy((*reg)[i].Id_prod,token);
 
@@ -186,14 +178,13 @@ int carga_prod(Productos **reg,int x)  //x es el numero de registros que se han 
                 token=strtok(NULL,"\n");
                 (*reg)[i].importe=atof(token);
 
-                printf("\nId producto [%s] Nombre producto[%s] Descripcion[%s] Id categoria[%s] Id gestor[%s] stock[%i] entrega[%i] importe[%f] \n",(*reg)[i].Id_prod,(*reg)[i].nomb_prod,(*reg)[i].Descrip,(*reg)[i].Id_categ,(*reg)[i].Id_gestor,(*reg)[i].stock,(*reg)[i].entrega,(*reg)[i].importe);
                 i++;
             }
         }
-        printf ("Se ha leido el fichero con %d registros \n\n",i);
+        printf ("Se ha leido el fichero productos.txt con %d registros \n",i);
         for(j=0; j<i; j++)
         {
-            printf("\nId producto [%s] Nombre producto[%s] Descripcion[%s] Id categoria[%s] Id gestor[%s] stock[%i] entrega[%i] importe[%f] \n",(*reg)[j].Id_prod,(*reg)[j].nomb_prod,(*reg)[j].Descrip,(*reg)[j].Id_categ,(*reg)[j].Id_gestor,(*reg)[j].stock,(*reg)[j].entrega,(*reg)[j].importe);
+            printf("\nId producto [%s] Nombre producto[%s] Descripcion[%s] Id categoria[%s] Id gestor[%s] stock[%i] entrega[%i] importe[%.2f] \n",(*reg)[j].Id_prod,(*reg)[j].nomb_prod,(*reg)[j].Descrip,(*reg)[j].Id_categ,(*reg)[j].Id_gestor,(*reg)[j].stock,(*reg)[j].entrega,(*reg)[j].importe);
         }
         fclose(f);
         return i;
@@ -204,7 +195,6 @@ int carga_prod(Productos **reg,int x)  //x es el numero de registros que se han 
 //postcondicion: devuelve los valores almacenados en el vector de registros
 int carga_cat(Categorias **reg,int x)  //x es el numero de registros que se han guardado
         {
-            printf("\nacceso correcto a carga\n");
             FILE *f;
             char linea[80];
             *reg=NULL;
@@ -219,12 +209,11 @@ int carga_cat(Categorias **reg,int x)  //x es el numero de registros que se han 
 
                     if (nuevo_reg == NULL)
                     {
-                        printf("Error al realocar memoria\n");
+                        printf("\nError al realocar memoria\n");
                         fclose(f); // Cerramos el archivo antes de salir
                         return -1;
                     }
                     *reg=nuevo_reg;
-                    printf("\n%i linea",i+1);
                     token=strtok(linea, "-");
                     strcpy((*reg)[i].Id_categ,token);
 
@@ -232,11 +221,10 @@ int carga_cat(Categorias **reg,int x)  //x es el numero de registros que se han 
                     token=strtok(NULL,"\n");
                     strcpy((*reg)[i].Descrip,token);
 
-                    printf("\nId categoria [%s] Descripcion[%s] \n",(*reg)[i].Id_categ,(*reg)[i].Descrip);
                     i++;
                 }
             }
-            printf ("Se ha leido el fichero con %d registros \n\n",i);
+            printf ("Se ha leido el fichero con categorias.txt %d con registros \n",i);
             for(j=0; j<i; j++)
             {
                 printf("\nId categoria [%s] Descripcion[%s] \n",(*reg)[j].Id_categ,(*reg)[j].Descrip);
@@ -250,7 +238,6 @@ int carga_cat(Categorias **reg,int x)  //x es el numero de registros que se han 
 //postcondicion: devuelve los valores almacenados en el vector de registros
 int carga_desc(Descuentos **reg,int x)  //x es el numero de registros que se han guardado
         {
-            printf("\nacceso correcto a carga\n");
             FILE *f;
             char linea[90];
             *reg=NULL;
@@ -265,12 +252,11 @@ int carga_desc(Descuentos **reg,int x)  //x es el numero de registros que se han
 
                     if (nuevo_reg==NULL)
                     {
-                        printf("Error al realocar memoria\n");
+                        printf("\nError al realocar memoria\n");
                         fclose(f); // Cerramos el archivo antes de salir
                         return -1;
                     }
                     *reg=nuevo_reg;
-                    printf("\n%i linea",i+1);
                     token=strtok(linea,"-");
                     strcpy((*reg)[i].Id_cod,token);
 
@@ -280,29 +266,28 @@ int carga_desc(Descuentos **reg,int x)  //x es el numero de registros que se han
 
 
                     token=strtok(NULL,"-");
-                    (*reg)[i].Tipo_des = token[0];
+                    strcpy((*reg)[i].Tipo_des,token);
 
 
                     token=strtok(NULL,"-");
-                    (*reg)[i].Estado_act = token[0];
+                    strcpy((*reg)[i].Estado_act,token);
 
 
                     token=strtok(NULL,"-");
-                    (*reg)[i].Aplicable = token[0];
+                    strcpy((*reg)[i].Aplicable,token);
 
 
                     token=strtok(NULL,"\n");
                     (*reg)[i].Importe=atof(token);
 
-                    printf("\nId cod [%s] Descrip[%s] Tipo_des[%c] Estado_act[%c] Importe[%f] Aplicable[%c] \n",(*reg)[i].Id_cod,(*reg)[i].Descrip,(*reg)[i].Tipo_des,(*reg)[i].Estado_act,(*reg)[i].Importe,(*reg)[i].Aplicable); //Preguntar esta parte
                     i++;
                 }
             }
 
-            printf ("Se ha leido el fichero con %d registros \n\n",i);
+            printf ("Se ha leido el fichero descuentos.txt con %d registros \n",i);
             for(j=0; j<i; j++)
             {
-                printf("\nId cod[%s] Descrip[%s] Tipo_des[%c] Estado_act[%c] Importe[%f] Aplicable[%c] \n",(*reg)[j].Id_cod,(*reg)[j].Descrip,(*reg)[j].Tipo_des,(*reg)[j].Estado_act,(*reg)[j].Importe,(*reg)[j].Aplicable); //Preguntar esta parte
+                printf("\nId cod[%s] Descrip[%s] Tipo_des[%s] Estado_act[%s] Importe[%.2f] Aplicable[%s] \n",(*reg)[j].Id_cod,(*reg)[j].Descrip,(*reg)[j].Tipo_des,(*reg)[j].Estado_act,(*reg)[j].Importe,(*reg)[j].Aplicable); //Preguntar esta parte
             }
             fclose(f);
             return i;
@@ -313,7 +298,6 @@ int carga_desc(Descuentos **reg,int x)  //x es el numero de registros que se han
 //postcondicion: devuelve los valores almacenados en el vector de registros
 int carga_descclient(Descuentosclientes **reg,int x)  //x es el numero de registros que se han guardado
         {
-            printf("\nacceso correcto a carga\n");
             FILE *f;
             char linea[50];
             *reg=NULL;
@@ -328,12 +312,11 @@ int carga_descclient(Descuentosclientes **reg,int x)  //x es el numero de regist
 
                     if (nuevo_reg == NULL)
                     {
-                        printf("Error al realocar memoria\n");
+                        printf("\nError al realocar memoria\n");
                         fclose(f); // Cerramos el archivo antes de salir
                         return -1;
                     }
                     *reg = nuevo_reg;
-                    printf("\n%i linea",i+1);
                     token=strtok(linea, "-");
                     strcpy((*reg)[i].Id_cliente,token);
 
@@ -361,12 +344,11 @@ int carga_descclient(Descuentosclientes **reg,int x)  //x es el numero de regist
                     token=strtok(NULL,"\n");
                     (*reg)[i].Estado_apli=atoi(token);
 
-                    printf("\nId_cliente[%s] Id_cod[%s] fecha_asig[%i/%i/%i] fecha_cadu[%i/%i/%i] Estado_apli[%i] \n",(*reg)[i].Id_cliente,(*reg)[i].Id_cod,(*reg)[i].fecha_asig.dia,(*reg)[i].fecha_asig.mes,(*reg)[i].fecha_asig.anio,(*reg)[i].fecha_cadu.dia,(*reg)[i].fecha_cadu.mes,(*reg)[i].fecha_cadu.anio,(*reg)[i].Estado_apli); //Preguntar esta parte
                     i++;
                 }
             }
 
-            printf ("Se ha leido el fichero con %d registros \n\n",i);
+            printf ("Se ha leido el fichero descuentosclientes.txt con %d registros \n",i);
             for(j=0; j<i; j++)
             {
                printf("\n nId_cliente[%s] Id_cod[%s] fecha_asig[%i/%i/%i] fecha_cadu[%i/%i/%i] Estado_apli[%i] \n",(*reg)[i].Id_cliente,(*reg)[i].Id_cod,(*reg)[i].fecha_asig.dia,(*reg)[i].fecha_asig.mes,(*reg)[i].fecha_asig.anio,(*reg)[i].fecha_cadu.dia,(*reg)[i].fecha_cadu.mes,(*reg)[i].fecha_cadu.anio,(*reg)[i].Estado_apli);
@@ -381,7 +363,6 @@ int carga_descclient(Descuentosclientes **reg,int x)  //x es el numero de regist
 //postcondicion: devuelve los valores almacenados en el vector de registros
 int carga_lockers(Lockers **reg,int x)  //x es el numero de registros que se han guardado
         {
-            printf("\nacceso correcto a carga\n");
             FILE *f;
             char linea[100];
             *reg=NULL;
@@ -396,12 +377,11 @@ int carga_lockers(Lockers **reg,int x)  //x es el numero de registros que se han
 
                     if (nuevo_reg==NULL)
                     {
-                        printf("Error al realocar memoria\n");
+                        printf("\nError al realocar memoria\n");
                         fclose(f); // Cerramos el archivo antes de salir
                         return -1;
                     }
                     *reg=nuevo_reg;
-                    printf("\n%i linea",i+1);
                     token=strtok(linea, "-");
                     strcpy((*reg)[i].Id_locker,token);
 
@@ -425,12 +405,11 @@ int carga_lockers(Lockers **reg,int x)  //x es el numero de registros que se han
                     token=strtok(NULL,"-");
                     (*reg)[i].Num_compOcup=atoi(token);
 
-                    printf("\nId locker[%s] Localidad[%s] Provincia[%s] Ubicacion[%s] Num_compT[%d]  Num_compOcup[%d]\n",(*reg)[i].Id_locker,(*reg)[i].Localidad,(*reg)[i].Provincia,(*reg)[i].Ubica,(*reg)[i].Num_compT,(*reg)[i].Num_compOcup);
                     i++;
                 }
             }
 
-            printf ("Se ha leido el fichero con %d registros \n\n",i);
+            printf ("Se ha leido el fichero lockers.txt con %d registros \n",i);
             for(j=0; j<i; j++)
             {
                printf("\nId locker[%s] Localidad[%s] Provincia[%s] Ubicacion[%s] Num_compT[%i]  Num_compOcup[%i]\n",(*reg)[i].Id_locker,(*reg)[i].Localidad,(*reg)[i].Provincia,(*reg)[i].Ubica,(*reg)[i].Num_compT,(*reg)[i].Num_compOcup);
@@ -444,7 +423,6 @@ int carga_lockers(Lockers **reg,int x)  //x es el numero de registros que se han
 //postcondicion: devuelve los valores almacenados en el vector de registros
 int carga_compartlockers(Compartimentoslockers **reg,int x)  //x es el numero de registros que se han guardado
         {
-            printf("\nacceso correcto a carga\n");
             FILE *f;
             char linea[65];
             *reg=NULL;
@@ -459,12 +437,11 @@ int carga_compartlockers(Compartimentoslockers **reg,int x)  //x es el numero de
 
                     if (nuevo_reg==NULL)
                     {
-                        printf("Error al realocar memoria\n");
+                        printf("\nError al realocar memoria\n");
                         fclose(f); // Cerramos el archivo antes de salir
                         return -1;
                     }
                     *reg = nuevo_reg;
-                    printf("\n%i linea",i+1);
                     token=strtok(linea, "-");
                     strcpy((*reg)[i].Id_locker,token);
 
@@ -478,7 +455,7 @@ int carga_compartlockers(Compartimentoslockers **reg,int x)  //x es el numero de
 
 
                     token=strtok(NULL,"-");
-                    (*reg)[i].Estado=token[0];
+                    strcpy((*reg)[i].Estado,token);
 
 
                     token=strtok(NULL,"/");
@@ -496,15 +473,13 @@ int carga_compartlockers(Compartimentoslockers **reg,int x)  //x es el numero de
                     token=strtok(NULL,"\n");
                     (*reg)[i].fecha_caduci.anio=atoi(token);
 
-
-                    printf("\nId_locker[%s] Num_comp[%i] Cod_locker[%i] Estado[%c] fecha_ocupa[%i/%i/%i] fecha_caduci[%i/%i/%i]\n",(*reg)[i].Id_locker,(*reg)[i].Num_comp,(*reg)[i].Cod_locker,(*reg)[i].Estado,(*reg)[i].fecha_ocupa.dia,(*reg)[i].fecha_ocupa.mes,(*reg)[i].fecha_ocupa.anio,(*reg)[i].fecha_caduci.dia,(*reg)[i].fecha_caduci.mes,(*reg)[i].fecha_caduci.anio); //Preguntar esta parte
                     i++;
                 }
             }
-            printf ("Se ha leido el fichero con %d registros \n\n",i);
+            printf ("Se ha leido el fichero compartimentoslockers.txt con %d registros \n",i);
             for(j=0; j<i; j++)
             {
-               printf("\nId_locker[%s] Num_comp[%i] Cod_locker[%i] Estado[%c] fecha_ocupa[%i/%i/%i] fecha_caduci[%i/%i/%i]\n",(*reg)[i].Id_locker,(*reg)[i].Num_comp,(*reg)[i].Cod_locker,(*reg)[i].Estado,(*reg)[i].fecha_ocupa.dia,(*reg)[i].fecha_ocupa.mes,(*reg)[i].fecha_ocupa.anio,(*reg)[i].fecha_caduci.dia,(*reg)[i].fecha_caduci.mes,(*reg)[i].fecha_caduci.anio);
+               printf("\nId_locker[%s] Num_comp[%i] Cod_locker[%i] Estado[%s] fecha_ocupa[%i/%i/%i] fecha_caduci[%i/%i/%i]\n",(*reg)[i].Id_locker,(*reg)[i].Num_comp,(*reg)[i].Cod_locker,(*reg)[i].Estado,(*reg)[i].fecha_ocupa.dia,(*reg)[i].fecha_ocupa.mes,(*reg)[i].fecha_ocupa.anio,(*reg)[i].fecha_caduci.dia,(*reg)[i].fecha_caduci.mes,(*reg)[i].fecha_caduci.anio);
             }
             fclose(f);
             return i;
@@ -515,7 +490,6 @@ int carga_compartlockers(Compartimentoslockers **reg,int x)  //x es el numero de
 //postcondicion: devuelve los valores almacenados en el vector de registros
 int carga_ped(Pedidos **reg,int x)  //x es el numero de registros que se han guardado
         {
-            printf("\nacceso correcto a carga\n");
             FILE *f;
             char linea[65];
             *reg=NULL;
@@ -530,12 +504,11 @@ int carga_ped(Pedidos **reg,int x)  //x es el numero de registros que se han gua
 
                     if (nuevo_reg==NULL)
                     {
-                        printf("Error al realocar memoria\n");
+                        printf("\nError al realocar memoria\n");
                         fclose(f); // Cerramos el archivo antes de salir
                         return -1;
                     }
                     *reg=nuevo_reg;
-                    printf("\n%i linea",i+1);
                     token=strtok(linea, "-");
                     strcpy((*reg)[i].Id_pedido,token);
 
@@ -552,7 +525,7 @@ int carga_ped(Pedidos **reg,int x)  //x es el numero de registros que se han gua
 
 
                     token=strtok(linea,"-");
-                    (*reg)[i].Lugar=token[0];
+                    strcpy((*reg)[i].Lugar,token);
 
 
                     token=strtok(linea, "-");
@@ -562,15 +535,14 @@ int carga_ped(Pedidos **reg,int x)  //x es el numero de registros que se han gua
                     token=strtok(linea, "\n");
                     strcpy((*reg)[i].Id_cod,token);
 
-                    printf("\nId_pedido[%s] fecha_pedi[%i/%i/%i] Id_cliente[%s] Lugar[%c] Id_cod[%s]\n",(*reg)[i].Id_pedido,(*reg)[i].fecha_pedi.dia,(*reg)[i].fecha_pedi.mes,(*reg)[i].fecha_pedi.anio,(*reg)[i].Id_cliente,(*reg)[i].Lugar,(*reg)[i].Id_cod); //Preguntar esta parte
                     i++;
                 }
             }
 
-            printf ("Se ha leido el fichero con %d registros \n\n",i);
+            printf ("Se ha leido el fichero pedidos.txt con %d registros \n",i);
             for(j=0; j<i; j++)
             {
-               printf("\nId_pedido[%s] fecha_pedi[%i/%i/%i] Id_cliente[%s] Lugar[%c] Id_cod[%s]\n",(*reg)[i].Id_pedido,(*reg)[i].fecha_pedi.dia,(*reg)[i].fecha_pedi.mes,(*reg)[i].fecha_pedi.anio,(*reg)[i].Id_cliente,(*reg)[i].Lugar,(*reg)[i].Id_cod);
+               printf("\nId_pedido[%s] fecha_pedi[%i/%i/%i] Id_cliente[%s] Lugar[%s] Id_cod[%s]\n",(*reg)[i].Id_pedido,(*reg)[i].fecha_pedi.dia,(*reg)[i].fecha_pedi.mes,(*reg)[i].fecha_pedi.anio,(*reg)[i].Id_cliente,(*reg)[i].Lugar,(*reg)[i].Id_cod);
             }
             fclose(f);
             return i;
@@ -582,7 +554,6 @@ int carga_ped(Pedidos **reg,int x)  //x es el numero de registros que se han gua
 //postcondicion: devuelve los valores almacenados en el vector de registros
 int carga_pedprod(Productospedidos **reg,int x)  //x es el numero de registros que se han guardado
         {
-            printf("\nacceso correcto a carga\n");
             FILE *f;
             char linea[100];
             *reg=NULL;
@@ -597,12 +568,11 @@ int carga_pedprod(Productospedidos **reg,int x)  //x es el numero de registros q
 
                     if (nuevo_reg==NULL)
                     {
-                        printf("Error al realocar memoria\n");
+                        printf("\nError al realocar memoria\n");
                         fclose(f); // Cerramos el archivo antes de salir
                         return -1;
                     }
                     *reg = nuevo_reg;
-                    printf("\n%i linea",i+1);
                     token=strtok(linea,"-");
                     strcpy((*reg)[i].Id_pedido,token);
 
@@ -628,7 +598,7 @@ int carga_pedprod(Productospedidos **reg,int x)  //x es el numero de registros q
 
 
                     token=strtok(NULL,"-");
-                    (*reg)[i].Estado_ped=token[0];
+                    strcpy((*reg)[i].Estado_ped,token);
 
 
                     token=strtok(NULL,"-");
@@ -650,15 +620,14 @@ int carga_pedprod(Productospedidos **reg,int x)  //x es el numero de registros q
                     token=strtok(NULL,"\n");
                     (*reg)[i].fecha_entre_devo.anio=atoi(token);
 
-                    printf("\nId_pedido[%s] Id_prod[%s] Num_unid[%i] fecha_entre[%i/%i/%i] Importe[%f] Estado_ped[%c] Id_transp[%s] Id_locker[%s] Cod_locker[%i] fecha_entre_devo[%i/%i/%i]\n",(*reg)[i].Id_pedido,(*reg)[i].Id_prod,(*reg)[i].Num_unid,(*reg)[i].fecha_entre.dia,(*reg)[i].fecha_entre.mes,(*reg)[i].fecha_entre.anio,(*reg)[i].Importe,(*reg)[i].Estado_ped,(*reg)[i].Id_transp,(*reg)[i].Id_locker,(*reg)[i].Cod_locker,(*reg)[i].fecha_entre_devo.dia,(*reg)[i].fecha_entre_devo.mes,(*reg)[i].fecha_entre_devo.anio); //Preguntar esta parte
                     i++;
                 }
             }
 
-            printf ("Se ha leido el fichero con %d registros \n\n",i);
+            printf ("Se ha leido el fichero productospedidos.txt con %d registros \n",i);
             for(j=0; j<i; j++)
             {
-               printf("\nId_pedido[%s] Id_prod[%s] Num_unid[%i] fecha_entre[%i/%i/%i] Importe[%f] Estado_ped[%c] Id_transp[%s] Id_locker[%s] Cod_locker[%i] fecha_entre_devo[%i/%i/%i]\n",(*reg)[i].Id_pedido,(*reg)[i].Id_prod,(*reg)[i].Num_unid,(*reg)[i].fecha_entre.dia,(*reg)[i].fecha_entre.mes,(*reg)[i].fecha_entre.anio,(*reg)[i].Importe,(*reg)[i].Estado_ped,(*reg)[i].Id_transp,(*reg)[i].Id_locker,(*reg)[i].Cod_locker,(*reg)[i].fecha_entre_devo.dia,(*reg)[i].fecha_entre_devo.mes,(*reg)[i].fecha_entre_devo.anio);
+               printf("\nId_pedido[%s] Id_prod[%s] Num_unid[%i] fecha_entre[%i/%i/%i] Importe[%.2f] Estado_ped[%s] Id_transp[%s] Id_locker[%s] Cod_locker[%i] fecha_entre_devo[%i/%i/%i]\n",(*reg)[i].Id_pedido,(*reg)[i].Id_prod,(*reg)[i].Num_unid,(*reg)[i].fecha_entre.dia,(*reg)[i].fecha_entre.mes,(*reg)[i].fecha_entre.anio,(*reg)[i].Importe,(*reg)[i].Estado_ped,(*reg)[i].Id_transp,(*reg)[i].Id_locker,(*reg)[i].Cod_locker,(*reg)[i].fecha_entre_devo.dia,(*reg)[i].fecha_entre_devo.mes,(*reg)[i].fecha_entre_devo.anio);
             }
             fclose(f);
             return i;
@@ -671,7 +640,6 @@ int carga_pedprod(Productospedidos **reg,int x)  //x es el numero de registros q
 //postcondicion: devuelve los valores almacenados en el vector de registros
 int carga_transp(Transportistas **reg,int x)  //x es el numero de registros que se han guardado
         {
-            printf("\nacceso correcto a carga\n");
             FILE *f;
             char linea[130];
             *reg=NULL;
@@ -686,12 +654,11 @@ int carga_transp(Transportistas **reg,int x)  //x es el numero de registros que 
 
                     if (nuevo_reg==NULL)
                     {
-                        printf("Error al realocar memoria\n");
+                        printf("\nError al realocar memoria\n");
                         fclose(f); // Cerramos el archivo antes de salir
                         return -1;
                     }
                     *reg=nuevo_reg;
-                    printf("\n%i linea",i+1);
                     token=strtok(linea,"-");
                     strcpy((*reg)[i].Id_transp,token);
 
@@ -715,11 +682,10 @@ int carga_transp(Transportistas **reg,int x)  //x es el numero de registros que 
                     token=strtok(NULL,"\n");
                     strcpy((*reg)[i].ciudad_repar,token);
 
-                    printf("\nId_transp[%s] Nombre_transp[%s] email[%s] contrasena[%s] Nombre_empre[%s] ciudad_repar[%s]\n",(*reg)[i].Id_transp,(*reg)[i].Nombre_transp,(*reg)[i].email,(*reg)[i].contrasena,(*reg)[i].Nombre_empre,(*reg)[i].ciudad_repar);
                     i++;
                 }
             }
-            printf ("Se ha leido el fichero con %d registros \n\n",i);
+            printf ("Se ha leido el fichero transportistas.txt con %d registros \n",i);
             for(j=0; j<i; j++)
             {
                printf("\nId_transp[%s] Nombre_transp[%s] email[%s] contrasena[%s] Nombre_empre[%s] ciudad_repar[%s]\n",(*reg)[i].Id_transp,(*reg)[i].Nombre_transp,(*reg)[i].email,(*reg)[i].contrasena,(*reg)[i].Nombre_empre,(*reg)[i].ciudad_repar);
@@ -734,7 +700,6 @@ int carga_transp(Transportistas **reg,int x)  //x es el numero de registros que 
 //postcondicion: devuelve los valores almacenados en el vector de registros
 int carga_devo(Devoluciones **reg,int x)  //x es el numero de registros que se han guardado
         {
-            printf("\nacceso correcto a carga\n");
             FILE *f;
             char linea[130];
             *reg=NULL;
@@ -747,14 +712,13 @@ int carga_devo(Devoluciones **reg,int x)  //x es el numero de registros que se h
                 {
                     Devoluciones *nuevo_reg = (Devoluciones *)realloc(*reg, (i+1) * sizeof(Devoluciones));
 
-                    if (nuevo_reg == NULL)
+                    if (nuevo_reg==NULL)
                     {
-                        printf("Error al realocar memoria\n");
+                        printf("\nError al realocar memoria\n");
                         fclose(f); // Cerramos el archivo antes de salir
                         return -1;
                     }
-                    *reg = nuevo_reg;
-                    printf("\n%i linea",i+1);
+                    *reg=nuevo_reg;
                     token=strtok(linea,"-");
                     strcpy((*reg)[i].Id_pedido,token);
 
@@ -794,11 +758,10 @@ int carga_devo(Devoluciones **reg,int x)  //x es el numero de registros que se h
                     token=strtok(NULL,"\n");
                     (*reg)[i].fecha_cadu.anio=atoi(token);
 
-                    printf("\nId_pedido[%s] Id_prod[%s] fecha_devolu[%i/%i/%i] motivo[%s] Estado[%s] fecha_acep[%i/%i/%i] fecha_cadu[%i/%i/%i]\n",(*reg)[i].Id_pedido,(*reg)[i].Id_prod,(*reg)[i].fecha_devolu.dia,(*reg)[i].fecha_devolu.mes,(*reg)[i].fecha_devolu.anio,(*reg)[i].motivo,(*reg)[i].Estado,(*reg)[i].fecha_acep.dia,(*reg)[i].fecha_acep.mes,(*reg)[i].fecha_acep.anio,(*reg)[i].fecha_cadu.dia,(*reg)[i].fecha_cadu.mes,(*reg)[i].fecha_cadu.anio); //Preguntar esta parte
-                    i++;
+                     i++;
                 }
             }
-            printf ("Se ha leido el fichero con %d registros \n\n",i);
+            printf ("Se ha leido el fichero devoluciones.txt con %d registros \n",i);
             for(j=0; j<i; j++)
             {
                printf("\nId_pedido[%s] Id_prod[%s] fecha_devolu[%i/%i/%i] motivo[%s] Estado[%s] fecha_acep[%i/%i/%i] fecha_cadu[%i/%i/%i]\n",(*reg)[i].Id_pedido,(*reg)[i].Id_prod,(*reg)[i].fecha_devolu.dia,(*reg)[i].fecha_devolu.mes,(*reg)[i].fecha_devolu.anio,(*reg)[i].motivo,(*reg)[i].Estado,(*reg)[i].fecha_acep.dia,(*reg)[i].fecha_acep.mes,(*reg)[i].fecha_acep.anio,(*reg)[i].fecha_cadu.dia,(*reg)[i].fecha_cadu.mes,(*reg)[i].fecha_cadu.anio);

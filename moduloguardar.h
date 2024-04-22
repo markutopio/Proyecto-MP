@@ -13,8 +13,7 @@ int guarda_ped(Pedidos *, int);
 int guarda_pedprod(Productospedidos *, int);
 int guarda_transp(Transportistas *, int);
 int guarda_devo(Devoluciones *, int);
-int guarda_cliente(Clientes *r, int)
-int guarda();
+int guarda_cliente(Clientes *r, int);
 
 #endif // GUARDAR_H
 

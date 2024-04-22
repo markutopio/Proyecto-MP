@@ -33,7 +33,7 @@ typedef struct{ //Estructura para adminprov.txt
     char Nombre_empre[21]; //20 caracteres y caracter terminador, ESIZON si es administrador
     char email[31]; //30 caracteres y caracter terminador, nombre de usuario para acceso a la plataforma
     char Contrasena[16];    //15 caracteres y caracter terminador, contrase�a para acceder al sistema
-    char Perfil_usuario; //a: <<administrador>> o p: <<proveedor>>
+    char Perfil_usuario[14]; //<<administrador>> o <<proveedor>>
 }Adminprov; //informacion de los administradores y proveedores de productos de ESIZON
 
 
@@ -58,10 +58,10 @@ typedef struct{ //Estructura para categorias.txt
 typedef struct{ //Estructura para descuentos.txt
     char Id_cod[11];    //10 caracteres y caracter terminador
     char Descrip[51];   //50 caracteres y caracter terminador
-    char Tipo_des; //p: <<codpro>>(codigo promocional) o r: <<cheqreg>>(cheque regalo)
-    char Estado_act; //a: <<activo>> o i: <<inactivo>>
+    char Tipo_des[8]; //<<codpro>>(codigo promocional) o <<cheqreg>>(cheque regalo)
+    char Estado_act[9]; //<<activo>> o <<inactivo>>
     float Importe;  //importe del descuento
-    char Aplicable; //t: <<todos>>(si es aplicable a todos los productos) o e: <<esizon>>(si solo es aplicable a gestionados por ESIZON)
+    char Aplicable[7]; //<<todos>>(si es aplicable a todos los productos) o <<esizon>>(si solo es aplicable a gestionados por ESIZON)
 }Descuentos; //informacion de los distintos codigos promocionales de descuentos y cheques regalo a emplear en la compra de productos
 
 
@@ -88,7 +88,7 @@ typedef struct{ //Estructura para compartimentoslockers.txt
     char Id_locker[11]; //10 caracteres maximo
     int Num_comp;   //numero de compartimentos
     int Cod_locker; //codigo del locker
-    char Estado;    //o: <<ocupado>> o v: <<vacio>>
+    char Estado[8];    //<<ocupado>> o <<vacio>>
     Fecha fecha_ocupa;  //fecha ocupacion
     Fecha fecha_caduci; //fecha caducidad
 }Compartimentoslockers; //informacion de los distintos productos depositados en cada compartimento y el codigo locker asociado al producto
@@ -98,7 +98,7 @@ typedef struct{ //Estructura para pedidos.txt
     char Id_pedido[8];  //7 digitos y caracter terminador
     Fecha fecha_pedi;   //fecha del pedido
     char Id_cliente[8]; //7 digitos y caracter terminador
-    char Lugar; //d: <<domicilio>> o l: <<locker>>
+    char Lugar[10]; //<<domicilio>> o <<locker>>
     char Id_locker[11]; //10 caracteres y caracter terminador
     char Id_cod[11];    //10 caracteres y caracter terminador
 }Pedidos; //informacion de los distintos pedidos realizados por los clientes registrados en la plataforma
@@ -110,7 +110,7 @@ typedef struct{ //Estructura para productospedidos.txt
     int Num_unid;   //numero de unidades del producto pedido
     Fecha fecha_entre;  //fecha prevista de entrega
     float Importe; //debe registrarse el importe al que se compra un producto por si se modifica el importe posteriormente
-    char Estado_ped; //p: <<enPreparacion>>, e: <<enviado>>, r: <<enReparto>>, l: <<enLocker>>, n: <<entregado>>, d: <<devuelto>>, t: <<transportista>>
+    char Estado_ped[14]; //<<enPreparacion>>, <<enviado>>, <<enReparto>>, <<enLocker>>, <<entregado>>, <<devuelto>>, <<transportista>>
     char Id_transp[5];  //4 digitos y caracter terminador
     char Id_locker[11]; //10 caracteres y caracter terminador
     int Cod_locker; //codigo del locker
