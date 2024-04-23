@@ -101,16 +101,16 @@ int main(){
                     printf("2. Crear cuenta nueva\n");
                     scanf("%d",&el);
                     switch(el){
-                        case 0: break;
+                        case 0:
+                        return;
+                        break;
 
                         case 1:
-
-
-
+                            iniciar_cliente();
                             break;
 
                         case 2: //crear cuenta nueva
-
+                            crear_cliente();
                             break;
                     }
 
@@ -125,14 +125,14 @@ int main(){
                     printf("2. Crear cuenta nueva(hace falta contrasena especial para crear cuenta de administrador)\n");
                     scanf("%d",&el);
                     switch(el){
-                        case 0: break;
-
-                        case 1: //iniciar sesion
-
+                        case 0:
+                            return;
                             break;
-
+                        case 1: //iniciar sesion
+                            iniciar_admin();
+                            break;
                         case 2: //crear cuenta nueva
-
+                            crear_admin();
                             break;
                     }
 
@@ -150,11 +150,10 @@ int main(){
                         case 0: break;
 
                         case 1: //iniciar sesion
-
+                            iniciar_prov();
                             break;
-
                         case 2: //crear cuenta nueva
-
+                            crear_prov();
                             break;
                     }
 
@@ -172,11 +171,10 @@ int main(){
                         case 0: break;
 
                         case 1: //iniciar sesion
-
+                            iniciar_transp();
                             break;
-
                         case 2: //crear cuenta nueva
-
+                            crear_transp();
                             break;
                     }
 
