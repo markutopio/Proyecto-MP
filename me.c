@@ -136,16 +136,16 @@ int comprobarFecha(char *dia_cad, char *mes_cad, char *anio_cad){
   int mes=atoi(mes_cad);
   int anio=atoi(anio_cad);
 
-  //Verificamos si la fecha es v√°lida
+  //Verificamos si la fecha es v·lida
   if (dia<1||dia>31||mes<1||mes>12||anio<1900)
     return 0; // Fecha incorrecta
 
-  //Verificamos si febrero tiene 28 o 29 d√≠as dependiendo del a√±o bisiesto
+  //Verificamos si febrero tiene 28 o 29 dÌas dependiendo del aÒo bisiesto
   int feb_max_days=28;
   if ((anio%4==0&&anio%100!=0)||anio%400==0)
     feb_max_days = 29;
 
-  //Verificamos si el d√≠a es v√°lido para el mes especificado
+  //Verificamos si el dÌa es v·lido para el mes especificado
   int max_days=31;
   if (mes==2)
     max_days=feb_max_days;
@@ -175,11 +175,11 @@ int comprobarFecha(char *dia_cad, char *mes_cad, char *anio_cad){
     else
         return 2; //Fecha futura
 }
-//cabecera:int iniciar_cliente()
+//cabecera:void iniciar_cliente(Clientes *cli, int a, int *ps);
 //precondicion:pide el tipo de registro del que se va a acceder y dos enteros, uno a puntero
 //postcondicion:permite que se pueda acceder a la cuenta del usuario cliente administrado
 
-int iniciar_cliente(Clientes *cli, int a, int *ps){
+void iniciar_cliente(Clientes *cli, int a, int *ps){
     int i, encontrado, intentos = 0;
     encontrado=0;
     char correo[31], contra[16], opcion;
@@ -188,7 +188,7 @@ int iniciar_cliente(Clientes *cli, int a, int *ps){
         printf("\nEscribe su correo para acceder: ");
         fflush(stdin);
         gets(correo);
-        printf("\nEscribe su contrase√±a para acceder: ");
+        printf("\nEscribe su contraseÒa para acceder: ");
         fflush(stdin);
         gets(contra);
 
@@ -203,10 +203,10 @@ int iniciar_cliente(Clientes *cli, int a, int *ps){
         }
 
         if(encontrado == 0){
-            puts("\n\nUsuario o contrase√±a no v√°lidos.");
+            puts("\n\nUsuario o contraseÒa no v·lidos.");
             intentos++;
             if(intentos == 3){
-                printf("¬øDesea crear una nueva cuenta? (S/N): ");
+                printf("øDesea crear una nueva cuenta? (S/N): ");
                 fflush(stdin);
                 opcion=getchar();
                 if(opcion=='S' || opcion=='s'){
@@ -216,13 +216,13 @@ int iniciar_cliente(Clientes *cli, int a, int *ps){
             }
         }
     }
-    return encontrado;
 }
 
-//cabecera:int iniciar_admin()
+
+//cabecera:void iniciar_admin(Adminprov *adm, int a, int *ps);
 //precondicion:pide el tipo de registro al cual se va a acceder y dos enteros, uno puntero
 //postcondicion:permite el acceso a la cuenta del administrador correspondiente
-int iniciar_admin(Adminprov *adm, int a, int *ps){
+void iniciar_admin(Adminprov *adm, int a, int *ps){
     int i, encontrado, intentos = 0;
     encontrado=0;
     char correo[31], contra[16], opcion;
@@ -231,7 +231,7 @@ int iniciar_admin(Adminprov *adm, int a, int *ps){
         printf("\nEscribe su correo para acceder: ");
         fflush(stdin);
         gets(correo);
-        printf("\nEscribe su contrase√±a para acceder: ");
+        printf("\nEscribe su contraseÒa para acceder: ");
         fflush(stdin);
         gets(contra);
 
@@ -240,16 +240,16 @@ int iniciar_admin(Adminprov *adm, int a, int *ps){
                 if(comprobar_id(adm[i].email)==1){
                     encontrado=1;
                     *ps=i;
-                    printf("\n\nBienvenido de nuevo %s (Usuario)", adm[(*ps)].Nombre_empre);
+                    printf("\n\nBienvenido de nuevo %s (Usuario)", correo);
                 }
             }
         }
 
         if(encontrado == 0){
-            puts("\n\nUsuario o contrase√±a no v√°lidos.");
+            puts("\n\nUsuario o contraseÒa no v·lidos.");
             intentos++;
             if(intentos == 3){
-                printf("¬øDesea crear una nueva cuenta? (S/N): ");
+                printf("øDesea crear una nueva cuenta? (S/N): ");
                 fflush(stdin);
                 opcion=getchar();
                 if(opcion=='S' || opcion=='s'){
@@ -259,13 +259,13 @@ int iniciar_admin(Adminprov *adm, int a, int *ps){
             }
         }
     }
-    return encontrado;
 }
 
-//cabecera:int iniciar_prov()
+
+//cabecera:void iniciar_prov(Adminprov *prov, int a, int *ps);
 //precondicion:pide el tipo del registro del que se vaya a iniciar sesion, dos enteros, uno puntero
 //postcondicion:permite el acceso a la cuenta del proveedor administrado
-int iniciar_prov(Adminprov *prov, int a, int *ps){
+void iniciar_prov(Adminprov *prov, int a, int *ps){
     int i, encontrado, intentos = 0;
     encontrado=0;
     char correo[31], contra[16], opcion;
@@ -274,7 +274,7 @@ int iniciar_prov(Adminprov *prov, int a, int *ps){
         printf("\nEscribe su correo para acceder: ");
         fflush(stdin);
         gets(correo);
-        printf("\nEscribe su contrase√±a para acceder: ");
+        printf("\nEscribe su contraseÒa para acceder: ");
         fflush(stdin);
         gets(contra);
 
@@ -283,16 +283,16 @@ int iniciar_prov(Adminprov *prov, int a, int *ps){
                 if(comprobar_id(prov[i].email)==1){
                     encontrado=1;
                     *ps=i;
-                    printf("\n\nBienvenido de nuevo %s (Usuario)", prov[(*ps)].Nombre_empre);
+                    printf("\n\nBienvenido de nuevo %s (Usuario)", correo);
                 }
             }
         }
 
         if(encontrado == 0){
-            puts("\n\nUsuario o contrase√±a no v√°lidos.");
+            puts("\n\nUsuario o contraseÒa no v·lidos.");
             intentos++;
             if(intentos == 3){
-                printf("¬øDesea crear una nueva cuenta? (S/N): ");
+                printf("øDesea crear una nueva cuenta? (S/N): ");
                 fflush(stdin);
                 opcion=getchar();
                 if(opcion=='S' || opcion=='s'){
@@ -302,13 +302,12 @@ int iniciar_prov(Adminprov *prov, int a, int *ps){
             }
         }
     }
-    return encontrado;
 }
 
-//cabecera:int iniciar_transp()
+//cabecera:void iniciar_transp(Transportistas *transp, int a, int *ps);
 //precondicion:pide el tipo de registro del que se va a iniciar sesion, dos enteros, uno de ellos puntero
 //postcondicion:permite el acceso a la cuenta del proveedor administrado
-int iniciar_transp(Transportistas *transp, int a, int *ps){
+void iniciar_transp(Transportistas *transp, int a, int *ps){
     int i, encontrado, intentos = 0;
     encontrado=0;
     char correo[31], contra[16], opcion;
@@ -317,7 +316,7 @@ int iniciar_transp(Transportistas *transp, int a, int *ps){
         printf("\nEscribe su correo para acceder: ");
         fflush(stdin);
         gets(correo);
-        printf("\nEscribe su contrase√±a para acceder: ");
+        printf("\nEscribe su contraseÒa para acceder: ");
         fflush(stdin);
         gets(contra);
 
@@ -326,16 +325,16 @@ int iniciar_transp(Transportistas *transp, int a, int *ps){
                 if(comprobar_id(transp[i].email)==1){
                     encontrado=1;
                     *ps=i;
-                    printf("\n\nBienvenido de nuevo %s (Usuario)", transp[(*ps)].Nombre_transp);
+                    printf("\n\nBienvenido de nuevo %s (Usuario)", transp[*ps].Nombre_transp);
                 }
             }
         }
 
         if(encontrado == 0){
-            puts("\n\nUsuario o contrase√±a no v√°lidos.");
+            puts("\n\nUsuario o contraseÒa no v·lidos.");
             intentos++;
             if(intentos == 3){
-                printf("¬øDesea crear una nueva cuenta? (S/N): ");
+                printf("øDesea crear una nueva cuenta? (S/N): ");
                 fflush(stdin);
                 opcion=getchar();
                 if(opcion=='S' || opcion=='s'){
@@ -345,9 +344,7 @@ int iniciar_transp(Transportistas *transp, int a, int *ps){
             }
         }
     }
-    return encontrado;
 }
-
 int comprobar_id(char *id_usu){
     int j,salir=0,encontrado;
     //Iniciamos el vector como 0001
@@ -382,15 +379,15 @@ void crear_cliente(Clientes *cli, int *a){
     fflush(stdin);
     printf("Introduzca su nombre\n");
     fflush(stdin);
-    printf("Ingrese su correo electr√≥nico: \n");
+    printf("Ingrese su correo electrÛnico: \n");
     fflush(stdin);
     gets(correo);
-    printf("Cree una contrase√±a: \n");
+    printf("Cree una contraseÒa: \n");
     fflush(stdin);
     gets(contra);
 
-    // Aqu√≠ deber√≠as agregar la l√≥gica para verificar que el correo no est√© ya en uso
-    // y que la contrase√±a cumpla con los requisitos de seguridad
+    // AquÌ deberÌas agregar la lÛgica para verificar que el correo no estÈ ya en uso
+    // y que la contraseÒa cumpla con los requisitos de seguridad
 
     // Si todo es correcto, agregamos el nuevo usuario al array de transportistas
     strcpy(cli[*a].Nomb_cliente, nombre);
@@ -408,15 +405,15 @@ void crear_admin(Adminprov *adm, int *a){
     char correo[31], contra[16];
     printf("Creando una nueva cuenta...\n");
     fflush(stdin);
-    printf("Ingrese su correo electr√≥nico: \n");
+    printf("Ingrese su correo electrÛnico: \n");
     fflush(stdin);
     gets(correo);
-    printf("Cree una contrase√±a: \n");
+    printf("Cree una contraseÒa: \n");
     fflush(stdin);
     gets(contra);
 
-    // Aqu√≠ deber√≠as agregar la l√≥gica para verificar que el correo no est√© ya en uso
-    // y que la contrase√±a cumpla con los requisitos de seguridad
+    // AquÌ deberÌas agregar la lÛgica para verificar que el correo no estÈ ya en uso
+    // y que la contraseÒa cumpla con los requisitos de seguridad
 
     // Si todo es correcto, agregamos el nuevo usuario al array de transportistas
     strcpy(adm[*a].email, correo);
@@ -433,15 +430,15 @@ void crear_prov(Adminprov *prov, int *a){
     char correo[31], contra[16];
     printf("Creando una nueva cuenta...\n");
     fflush(stdin);
-    printf("Ingrese su correo electr√≥nico: \n");
+    printf("Ingrese su correo electrÛnico: \n");
     fflush(stdin);
     gets(correo);
-    printf("Cree una contrase√±a: \n");
+    printf("Cree una contraseÒa: \n");
     fflush(stdin);
     gets(contra);
 
-    // Aqu√≠ deber√≠as agregar la l√≥gica para verificar que el correo no est√© ya en uso
-    // y que la contrase√±a cumpla con los requisitos de seguridad
+    // AquÌ deberÌas agregar la lÛgica para verificar que el correo no estÈ ya en uso
+    // y que la contraseÒa cumpla con los requisitos de seguridad
 
     // Si todo es correcto, agregamos el nuevo usuario al array de transportistas
     strcpy(prov[*a].email, correo);
@@ -460,22 +457,26 @@ void crear_transp(Transportistas *transp, int *a){
     fflush(stdin);
     printf("Introduzca su nombre: \n");
     fflush(stdin);
-    printf("Ingrese su correo electr√≥nico: \n");
+    printf("Ingrese su correo electrÛnico: \n");
     fflush(stdin);
     gets(correo);
-    printf("Cree una contrase√±a: \n");
+    printf("Cree una contraseÒa: \n");
     fflush(stdin);
     gets(contra);
 
-    // Aqu√≠ deber√≠as agregar la l√≥gica para verificar que el correo no est√© ya en uso
-    // y que la contrase√±a cumpla con los requisitos de seguridad
+    // AquÌ deberÌas agregar la lÛgica para verificar que el correo no estÈ ya en uso
+    // y que la contraseÒa cumpla con los requisitos de seguridad
 
     // Si todo es correcto, agregamos el nuevo usuario al array de transportistas
     strcpy(transp[*a].Nombre_transp,nombre);
     strcpy(transp[*a].email, correo);
-    strcpy(transp[*a].Contrasena, contra);
+    strcpy(transp[*a].contrasena, contra);
     // Incrementamos el contador de transportistas
     (*a)++;
     printf("Usuario creado exitosamente. Bienvenido %s!\n", nombre);
 }
 
+void salir_aplicacion(){
+    printf("Saliendo del programa...\n");
+    exit(0);
+}
